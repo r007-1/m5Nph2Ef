@@ -5,8 +5,8 @@ from lxml import etree
 from flyyy.items import NeedSupplyAdditional
 import scrapy
 
-class NeedSupplyBrands(scrapy.Spider):
-  name = "needsupply-brands"
+class NSBrands(scrapy.Spider):
+  name = "nsbrands"
   allowed_domains = ["needsupply.com"]
   start_urls = []
   sitemaps = ["https://needsupply.com/media/sitemap.xml"]
