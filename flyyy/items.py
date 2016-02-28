@@ -69,3 +69,27 @@ class NuyolkItem(scrapy.Item):
     date_last_updated = scrapy.Field()
     on_sale = scrapy.Field()
     pass
+
+class NeedSupplyAdditional(scrapy.Item):
+    product_link = scrapy.Field()
+    brand = scrapy.Field()
+    mcats = scrapy.Field()
+    mcat_code = scrapy.Field()
+    mcat_1 = scrapy.Field()
+    mcat_2 = scrapy.Field()
+    mcat_3 = scrapy.Field()
+    mcat_4 = scrapy.Field()
+    mcat_5 = scrapy.Field()
+    pass
+
+class ShoptiquesAdditional(scrapy.Item):
+    product_link = scrapy.Field()
+    brand = scrapy.Field()
+    mcats = scrapy.Field()
+    mcat_code = scrapy.Field()
+    mcat_1 = scrapy.Field()
+    mcat_2 = scrapy.Field()
+    mcat_3 = scrapy.Field()
+    mcat_4 = scrapy.Field()
+    mcat_5 = scrapy.Field()
+    pass
