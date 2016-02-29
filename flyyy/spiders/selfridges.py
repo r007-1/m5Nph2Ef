@@ -16,7 +16,6 @@ class Selfridges(scrapy.Spider):
 		tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
 		for tag in tags:
 			start_urls.append(tag.findNext("loc").text)
-	start_urls = start_urls[1250:1270]
 
 	def parse(self, response):
 		datetime = int(str(int(time.time()*100))) #Don't change!
