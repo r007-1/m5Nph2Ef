@@ -6,7 +6,7 @@ from flyyy.items import NuyolkItem
 import random
 import time
 import csv
-from algoliasearch import algoliasearch
+#from algoliasearch import algoliasearch
 
 class Shoptiques(scrapy.Spider):
 	name = "shoptiques"
@@ -18,10 +18,10 @@ class Shoptiques(scrapy.Spider):
 		for tag in tags:
 			url = tag.findNext("loc").text
 			start_urls.append(url)
-	start_urls = start_urls[40091:50000]
+	start_urls = start_urls[62050:]
 	def parse(self, response):
-		client = algoliasearch.Client("BTPCHYHQQY", "e68eda57aa7bd4b52dd27e9226dec21a")
-		index = client.init_index('products')
+		#client = algoliasearch.Client("BTPCHYHQQY", "e68eda57aa7bd4b52dd27e9226dec21a")
+		#index = client.init_index('products')
 		datetime = int(str(int(time.time()*100))) #Don't change!
 		random.seed(1412112 + datetime) #Don't change!
 		item = NuyolkItem() #Don't change!
@@ -85,8 +85,8 @@ class Shoptiques(scrapy.Spider):
 		item['affiliate_partner'] = "viglink"
 		item['objectID'] = item['prod_id']
 		item['merchant'] = "Shoptiques"
-		product = {}
-		for attr in item.keys():
-			product[attr] = item[attr]
-		res = index.save_object(product)
+		#product = {}
+		#for attr in item.keys():
+		#	product[attr] = item[attr]
+		#res = index.save_object(product)
 		yield item
