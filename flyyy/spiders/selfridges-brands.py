@@ -6,7 +6,7 @@ from flyyy.items import NuyolkItem
 import random
 import time
 
-class Selfridges(scrapy.Spider):
+class SelfridgesBrands(scrapy.Spider):
 	name = "selfridges-brands"
 	allowed_domains = ["selfridges.com"]
 	start_urls = []
