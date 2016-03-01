@@ -19,17 +19,11 @@ class SelfridgesBrands(scrapy.Spider):
 	def parse(self, response):
 		item = NuyolkItem() #Don't change!
 		try:
-			item['brand'] = str(response.selector.xpath('//*[@name="productDesc"]//p[@itemprop="brand"]/a/text()').extract()[0])
+			item['brand'] = str(response.selector.xpath('//*[@class="productDesc"]//p[@itemprop="brand"]/a/text()').extract()[0]).strip()
 			mcats = response.selector.xpath('//nav[@id="breadcrumb"]//li/a/text()').extract()
-            		item['mcats'] = mcats[1:len(mcats)-1]
-            		item['merchant_prod_id'] = str(response.selector.xpath('//form[@name="productId"]/@value').extract()[0])
+            		item['mcats'] = mcats[1:len(mcats)]
+            		item['merchant_prod_id'] = str(response.selector.xpath('//form/input[@name="productId"]/@value').extract()[0])
 			item['product_link'] = str(response.selector.xpath('//*[@id="canonicalUrl"]/@href').extract()[0])
-			for i in range(0, 5):
-				attr = 'mcat_' + str(i+1)
-				if i < len(item['mcats']):
-					item[attr] = str(item['mcats'][i])
-				else:
-					item[attr] = ""
 			yield item
 		except Exception as e:
 			return
