@@ -23,7 +23,7 @@ class Asos(scrapy.Spider):
         for tag in tags:
             prod_link = tag.findNext("loc").text
             if '?iid=' in prod_link:
-                start_urls.append(prod_link0:prod_link.find("&mporgp")])
+                start_urls.append(prod_link[0:prod_link.find("&mporgp")])
     start_urls = start_urls[0:25]
 
     def parse(self, response):
