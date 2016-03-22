@@ -6,7 +6,6 @@ from flyyy.items import NuyolkItem
 import time
 import random
 import datetime
-import pandas
 
 
 class Asos(scrapy.Spider):
