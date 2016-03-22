@@ -6,10 +6,10 @@ from flyyy.items import NuyolkItem
 import time
 import random
 import datetime
-
+import pandas
 
 class Asos(scrapy.Spider):
-    name = "asos"
+    name = "asos-us"
     allowed_domains = ["asos.com"]
     start_urls = []
     sitemaps = []
@@ -32,7 +32,7 @@ class Asos(scrapy.Spider):
         random.seed(1412112 + datetime) #Don't change!
 
         item = NuyolkItem() #Don't change!
-        item['_id'] = str(datetime) + str(int(random.uniform(100000, 999999))) #Don't change!
+        item['prod_id'] = str(datetime) + str(int(random.uniform(100000, 999999))) #Don't change!
 
         item['affiliate_partner'] = "viglink"
         item['brand'] = response.selector.xpath('//div[@id = "productTabs"]/div[@id="ctl00_ContentMainPage_brandInfoPanel"]/a[1]/strong/text()').extract()[0]
@@ -85,7 +85,6 @@ class Asos(scrapy.Spider):
         except IndexError:
             item['imglink_6'] = ""
 
-
         item['mcat_1'] = ""
         item['mcat_2'] = ""
         item['mcat_3'] = ""
@@ -93,7 +92,7 @@ class Asos(scrapy.Spider):
         item['mcat_5'] = ""
         item['mcat_code'] = ""
 
-        item['merchant'] = "Asos"
+        item['merchant'] = "ASOS US"
         item['merchant_id']  = "IU95X3"
         item['merchant_prod_id'] = response.selector.xpath('//span[@class="productcode"]/text()').extract()[0]
 
@@ -109,14 +108,14 @@ class Asos(scrapy.Spider):
                 item['price_sale'] = sale
                 item['price_perc_discount'] = int(100-100*(sale/orig))
                 item['price'] = item['price_sale']
-                item['on_sale'] = TRUE #BOOLEAN
+                item['on_sale'] = True #BOOLEAN
             else:
                 item['price_orig'] = int(float(response.selector.xpath('//div[@class="product_price"]/span[@id="ctl00_ContentMainPage_ctlSeparateProduct_lblProductPrice"]/text()').extract()[0][1:]))
                 item['price'] = item['price_orig']
         except IndexError:
             item['price_orig'] = int(float(response.selector.xpath('//div[@class="product_price"]/span[@id="ctl00_ContentMainPage_ctlSeparateProduct_lblProductPrice"]/text()').extract()[0][1:]))
             item['price'] = item['price_orig']
-            item['on_sale'] = FALSE #BOOLEAN
+            item['on_sale'] = False #BOOLEAN
 
         item['primary_color'] = ""
 
