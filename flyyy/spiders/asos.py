@@ -24,7 +24,7 @@ class Asos(scrapy.Spider):
             prod_link = tag.findNext("loc").text
             if '?iid=' in prod_link:
                 start_urls.append(prod_link[0:prod_link.find("&mporgp")])
-    start_urls = start_urls[0:25]
+    
 
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!
@@ -95,7 +95,7 @@ class Asos(scrapy.Spider):
         item['merchant_id']  = "IU95X3"
         item['merchant_prod_id'] = response.selector.xpath('//span[@class="productcode"]/text()').extract()[0]
 
-        item['is_available'] = True #BOOLEAN
+        item['is_available'] = 'True' #BOOLEAN
         item['currency'] = response.selector.xpath('//div[@class="currency-list"]/select/option[@selected="selected"]/text()').extract()[0][-3:]
         item['currency_symbol'] = response.selector.xpath('//div[@class="currency-list"]/select/option[@selected="selected"]/text()').extract()[0][0:response.selector.xpath('//div[@class="currency-list"]/select/option[@selected="selected"]/text()').extract()[0].find(" ")]
 
@@ -107,14 +107,15 @@ class Asos(scrapy.Spider):
                 item['price_sale'] = sale
                 item['price_perc_discount'] = int(100-100*(sale/orig))
                 item['price'] = item['price_sale']
-                item['on_sale'] = True #BOOLEAN
+                item['on_sale'] = 'True' #BOOLEAN
             else:
                 item['price_orig'] = int(float(response.selector.xpath('//div[@class="product_price"]/span[@id="ctl00_ContentMainPage_ctlSeparateProduct_lblProductPrice"]/text()').extract()[0][1:]))
                 item['price'] = item['price_orig']
+                item['on_sale'] = 'False'
         except IndexError:
             item['price_orig'] = int(float(response.selector.xpath('//div[@class="product_price"]/span[@id="ctl00_ContentMainPage_ctlSeparateProduct_lblProductPrice"]/text()').extract()[0][1:]))
             item['price'] = item['price_orig']
-            item['on_sale'] = False #BOOLEAN
+            item['on_sale'] = 'False' #BOOLEAN
 
         item['primary_color'] = ""
 
