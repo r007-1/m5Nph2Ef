@@ -112,10 +112,12 @@ class SaksFifthAvenue(scrapy.Spider):
             else:
                 item['price_orig'] = int(float(response.selector.xpath('//dd[@class="product-pricing__price"]/span[@itemprop="price"]/text()').extract()[0]))
                 item['price'] = item['price_orig']
+                item['price_sale'] = ""
                 item['on_sale'] = 'False'
         except IndexError:
             item['price_orig'] = int(float(response.selector.xpath('//dd[@class="product-pricing__price"]/span[@itemprop="price"]/text()').extract()[0]))
             item['price'] = item['price_orig']
+            item['price_sale'] = ""
             item['on_sale'] = 'False' #BOOLEAN
 
         item['primary_color'] = ""
