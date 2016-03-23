@@ -8,7 +8,7 @@ import random
 import datetime
 
 class TheOutnet(scrapy.Spider):
-    name = "the-outnet"
+    name = "theoutnet"
     allowed_domains = ["theoutnet.com"]
     start_urls = []
     sitemaps = []
