@@ -111,10 +111,12 @@ class Revolve(scrapy.Spider):
             else:
                 item['price_orig'] = int(float(response.selector.xpath('//div[@class="prices prices--md block block--lg"]/span[@class="prices__retail-strikethrough"]/text()').extract()[0][1:]))
                 item['price'] = item['price_orig']
+                item['price_sale'] = ""
                 item['on_sale'] = 'False'
         except IndexError:
             item['price_orig'] = int(float(response.selector.xpath('//div[@class="prices prices--md block block--lg"]/span[@class="prices__retail"]/text()').extract()[0][1:]))
             item['price'] = item['price_orig']
+            item['price_sale'] = ""
             item['on_sale'] = 'False' #BOOLEAN
 
         item['primary_color'] = ""
