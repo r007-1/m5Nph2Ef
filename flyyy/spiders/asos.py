@@ -111,10 +111,13 @@ class Asos(scrapy.Spider):
             else:
                 item['price_orig'] = int(float(response.selector.xpath('//div[@class="product_price"]/span[@id="ctl00_ContentMainPage_ctlSeparateProduct_lblProductPrice"]/text()').extract()[0][1:]))
                 item['price'] = item['price_orig']
+                item['price_sale'] = ""
                 item['on_sale'] = 'False'
+                
         except IndexError:
             item['price_orig'] = int(float(response.selector.xpath('//div[@class="product_price"]/span[@id="ctl00_ContentMainPage_ctlSeparateProduct_lblProductPrice"]/text()').extract()[0][1:]))
             item['price'] = item['price_orig']
+            item['price_sale'] = ""
             item['on_sale'] = 'False' #BOOLEAN
 
         item['primary_color'] = ""
