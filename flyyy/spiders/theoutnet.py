@@ -110,10 +110,12 @@ class TheOutnet(scrapy.Spider):
             else:
                 item['price_orig'] = int(float(response.selector.xpath('//div[@class="prices-all"]/div[@itemprop="offers"]/span[@itemprop="price"]/text()').extract()[0][1:]))
                 item['price'] = item['price_orig']
+                item['price_sale'] = ""
                 item['on_sale'] = 'False'
         except IndexError:
             item['price_orig'] = int(float(response.selector.xpath('//div[@class="prices-all"]/div[@itemprop="offers"]/span[@itemprop="price"]/text()').extract()[0][1:]))
             item['price'] = item['price_orig']
+            item['price_sale'] = ""
             item['on_sale'] = 'False' #BOOLEAN
 
         item['primary_color'] = ""
