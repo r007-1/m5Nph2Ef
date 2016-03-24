@@ -15,9 +15,9 @@ SPIDER_MODULES = ['flyyy.spiders']
 NEWSPIDER_MODULE = 'flyyy.spiders'
 
 # Custom Settings
-DOWNLOAD_HANDLERS = {'s3': None,}
-ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 300}
-IMAGES_STORE = './images/'
+#DOWNLOAD_HANDLERS = {'s3': None,}
+#ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 300}
+#IMAGES_STORE = './images/'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'flyyy (+http://www.yourdomain.com)'
