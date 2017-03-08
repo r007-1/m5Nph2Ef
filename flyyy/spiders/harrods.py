@@ -1,3 +1,5 @@
+#http://www.harrods.com/product/flowerbed-embroidered-dress/needle-and-thread/000000000005459400
+
 from bs4 import BeautifulSoup as bs
 from lxml import etree
 import requests
@@ -16,8 +18,7 @@ class Harrods(scrapy.Spider):
     sitemap_main = ["http://www.harrods.com/sitemap-index.xml"]
     main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
     for main_tag in main_tags:
-        if 'products' in main_tag:
-            sitemaps.append(main_tag.findNext("loc").text)
+        sitemaps.append(main_tag.findNext("loc").text)
 
     for sitemap in sitemaps:
         tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
@@ -25,6 +26,7 @@ class Harrods(scrapy.Spider):
             prod_link = tag.findNext("loc").text
             start_urls.append(prod_link)
 
+    start_urls = start_urls[0:10]
 
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!
@@ -113,7 +115,7 @@ class Harrods(scrapy.Spider):
                 item['price'] = item['price_orig']
                 item['price_sale'] = ""
                 item['on_sale'] = 'False'
-                
+
         except IndexError:
             item['price_orig'] = int(float(response.selector.xpath('//dd[@class="product-pricing__price"]/span[@itemprop="price"]/text()').extract()[0]))
             item['price'] = item['price_orig']

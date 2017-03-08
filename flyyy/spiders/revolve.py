@@ -14,7 +14,7 @@ class Revolve(scrapy.Spider):
     sitemaps = []
 
     sitemap_main = ["http://www.revolve.com/scripts/rev_sitemap/rev_sitemap_index.xml"]
-    main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
+    main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("url")
     for main_tag in main_tags:
        sitemaps.append(main_tag.findNext("loc").text)
 
@@ -24,8 +24,7 @@ class Revolve(scrapy.Spider):
             prod_link = tag.findNext("loc").text
             if 'dp' in prod_link:
                 start_urls.append(prod_link)
-
-
+    start_urls = start_urls[0:10]
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!
         random.seed(1412112 + datetime) #Don't change!

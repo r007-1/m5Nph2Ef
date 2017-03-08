@@ -14,18 +14,20 @@ class SaksFifthAvenue(scrapy.Spider):
     sitemaps = []
 
     sitemap_main = ["http://www.saksfifthavenue.com/sitemap/index.xml"]
+    '''
     main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
     for main_tag in main_tags:
         if 'detail' in main_tag:
             sitemaps.append(main_tag.findNext("loc").text)
-
+    '''
+    for i in range(0,12):
+        sitemaps.append("http://www.saksfifthavenue.com/sitemap/detail" + str(i) + ".xml")
     for sitemap in sitemaps:
         tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
         for tag in tags:
             prod_link = tag.findNext("loc").text
             if 'PRODUCT' in prod_link:
                 start_urls.append(prod_link)
-
 
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!

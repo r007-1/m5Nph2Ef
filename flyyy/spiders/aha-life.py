@@ -13,10 +13,10 @@ class AHAlife(scrapy.Spider):
     start_urls = []
     sitemaps = []
     sitemap_main = ["http://www.ahalife.com/sitemap.xml"]
-    main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
-    for main_tag in main_tags:
-        if 'product' in main_tag:
-            sitemaps.append(main_tag.findNext("loc").text)
+    #main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
+    #for main_tag in main_tags:
+    #    if 'product' in main_tag:
+    #``        sitemaps.append(main_tag.findNext("loc").text)
     start_urls = sitemaps
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!
