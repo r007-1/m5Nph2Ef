@@ -10,7 +10,13 @@ class Selfridges(scrapy.Spider):
 	name = "selfridges"
 	allowed_domains = ["selfridges.com"]
 	start_urls = []
-	sitemaps = ["http://www.selfridges.com/sitemap_US_en_1.xml"]
+	sitemap_main = "http://www.selfridges.com/sitemap.xml"
+	sitemaps = []
+	tags = bs(requests.get(sitemap_main).text, "lxml").find_all("sitemap")
+	for tag in tags:
+		t = tag.findNext("loc").text
+		if "US_en" in t:
+			sitemaps.append(t)
 
 	for sitemap in sitemaps:
 		tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
@@ -27,7 +33,8 @@ class Selfridges(scrapy.Spider):
 			item['cat_1'] = "" #deprecate
 			item['cat_2'] = "" #deprecate
 			item['cat_3'] = "" #deprecate
-			item['currency'] = str(response.selector.xpath('//div[@class="cflag transPerfectTranslate"]/div[@class="translateFlag"]/a/@data-currency').extract()[0])
+			item['currency'] = str(response.selector.xpath('//*[@class="translateFlag"]/a/span/text()').extract()[0])
+			response.selector.path('//*[@id="currencyLink"]/span')
 			item['date_added'] = str(time.strftime("%d/%m/%Y %H:%M:%S"))
 			images=[]
 			images.append(response.selector.xpath('//div[@class="productImage"]//img/@data-rvsrc').extract()[0])

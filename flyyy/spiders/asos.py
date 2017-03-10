@@ -9,10 +9,11 @@ import datetime
 
 class Asos(scrapy.Spider):
     name = "asos-us"
-    allowed_domains = ["asos.com"]
+    allowed_domains = ["us.asos.com"]
     start_urls = []
     sitemaps = []
     sitemap_main = ["http://us.asos.com/sitemap.ashx"]
+    sitemap_main = ["http://us.asos.com/sitemap.xml?site=en-US"]
     main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
     for main_tag in main_tags:
         sitemaps.append(main_tag.findNext("loc").text)
@@ -23,7 +24,7 @@ class Asos(scrapy.Spider):
             if '?iid=' in prod_link:
                 start_urls.append(prod_link[0:prod_link.find("&mporgp")])
     #s = start_urls
-    start_urls = start_urls[86850:]
+    #start_urls = start_urls[86850:]
     def parse(self, response):
         def find_between(s, first, last):
             try:

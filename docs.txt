@@ -1,0 +1,18 @@
+## Setting up for the first time on mac
+- `sudo easy_install pip`
+- `sudo port install py27-lxml`
+- `sudo pip install --ignore-installed six`
+- `sudo pip install requests`
+- `pip install Twisted==16.4.1`
+- `sudo pip install beautifulsoup4` //must be after lxml!!
+- OSError: [Errno 1] Operation not permitted: '/tmp/pip-Vn7xLk-uninstall/System/Library/Frameworks/Python.framework/Versions/2.7/
+Extras/lib/python/six-1.4.1-py2.7.egg-info'
+
+pip install -r requirements.txt
+
+
+
+????
+## Requirements.txt
+- Deleted `bzr==2.7.0dev1`
+- Deleted `chardet==2.0.1`

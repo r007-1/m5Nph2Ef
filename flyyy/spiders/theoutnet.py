@@ -12,19 +12,12 @@ class TheOutnet(scrapy.Spider):
     allowed_domains = ["theoutnet.com"]
     start_urls = []
     sitemaps = []
-
-    sitemap_main = ["https://www.theoutnet.com/sitemap.xml"]
-    main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
+    sitemap_main = ["https://www.theoutnet.com/en-US/sitemap.xml"]
+    main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("url")
     for main_tag in main_tags:
-        sitemaps.append(main_tag.findNext("loc").text)
-
-    for sitemap in sitemaps:
-        tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
-        for tag in tags:
-            prod_link = tag.findNext("loc").text
-            start_urls.append(prod_link)
-
-
+        t = main_tag.findNext("loc").text
+        if 'Product' in t:
+            start_urls.append(t)
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!
         random.seed(1412112 + datetime) #Don't change!

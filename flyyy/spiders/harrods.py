@@ -37,7 +37,11 @@ class Harrods(scrapy.Spider):
 
         item['affiliate_partner'] = "viglink"
         item['brand'] = "Harrods"
-        item['long_desc'] = response.selector.xpath('//p[@class="description"]/text()').extract()[0]
+        try:
+            item['long_desc'] = response.selector.xpath('//p[@class="description"]/text()').extract()[0]
+        except IndexError:
+            item['long_desc'] = ''
+        
         item['short_desc'] = response.selector.xpath('//span[@class="productname"]/text()').extract()[0].strip()
         item['product_link'] = response.selector.xpath('//head/link[@rel="canonical"]/@href').extract()[0]
 
@@ -46,8 +50,8 @@ class Harrods(scrapy.Spider):
         item['cat_3'] = ""
         item['cat_code'] = ""
 
-        item['date_added'] = [unicode(str(time.strftime("%d/%m/%Y %H:%M:%S")), "utf-8")]
-        item['date_last_updated'] = [unicode(str(time.strftime("%d/%m/%Y %H:%M:%S")), "utf-8")]
+        item['date_added'] = unicode(str(time.strftime("%d/%m/%Y %H:%M:%S")), "utf-8")
+        item['date_last_updated'] = unicode(str(time.strftime("%d/%m/%Y %H:%M:%S")), "utf-8")
 
         item['image_urls'] = ""
         item['img_1'] = ""
@@ -101,6 +105,12 @@ class Harrods(scrapy.Spider):
         item['currency'] = response.selector.xpath('//span[@class="country-selector_currency"]/text()').extract()[0]
         item['currency_symbol'] = response.selector.xpath('//span[@class="country-selector_currency"]/span[@class="code"]/text()').extract()[0]
 
+        item['price'] = int(float(response.selector.xpath('//span[@class="prices price"]/span/span/text()').extract()[0][1:]))
+        item['price_orig'] = int(float(response.selector.xpath('//span[@class="prices price"]/span/span/text()').extract()[0][1:]))
+        item['price_sale'] = int(float(response.selector.xpath('//span[@class="prices price"]/span/span/text()').extract()[0][1:]))
+        item['price_perc_discount'] = 0
+        item['on_sale'] = 'False'
+        '''
         try:
             if (int(float(response.selector.xpath('//span[@class="prices price"]/span[@class="was"]/text()').extract()[0][1:])) != int(float(response.selector.xpath('//span[@class="prices price"]/span[@class="now"]/text()').extract()[0][5:]))):
                 orig = int(float(response.selector.xpath('//span[@class="prices price"]/span[@class="was"]/text()').extract()[0][1:]))
@@ -115,13 +125,12 @@ class Harrods(scrapy.Spider):
                 item['price'] = item['price_orig']
                 item['price_sale'] = ""
                 item['on_sale'] = 'False'
-
         except IndexError:
             item['price_orig'] = int(float(response.selector.xpath('//dd[@class="product-pricing__price"]/span[@itemprop="price"]/text()').extract()[0]))
             item['price'] = item['price_orig']
             item['price_sale'] = ""
             item['on_sale'] = 'False' #BOOLEAN
-
+        '''
         item['primary_color'] = ""
 
         tags = [str(item['brand']), str(item['short_desc']), str(item['long_desc'])] #str(" ".join(item['mcats'])),

@@ -13,7 +13,7 @@ class SaksOff5th(scrapy.Spider):
     start_urls = []
     sitemaps = []
 
-    sitemap_main = ["http://www.saksoff5th.com/sitemap_index.xml"]
+    sitemap_main = ["http://www.saksoff5th.com/sitemap/index.xml"]
     main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
     for main_tag in main_tags:
         sitemaps.append(main_tag.findNext("loc").text)
@@ -23,7 +23,6 @@ class SaksOff5th(scrapy.Spider):
         for tag in tags:
             prod_link = tag.findNext("loc").text
             start_urls.append(prod_link)
-
 
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!
