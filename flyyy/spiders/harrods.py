@@ -30,7 +30,7 @@ class Harrods(scrapy.Spider):
         if 'product' in s:
             su.append(s)
     start_urls = su
-    start_urls = start_urls[0:10]
+    start_urls = start_urls[1000:1120]
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!
         random.seed(1412112 + datetime) #Don't change!
@@ -44,8 +44,10 @@ class Harrods(scrapy.Spider):
             item['long_desc'] = response.selector.xpath('//p[@class="description"]/text()').extract()[0]
         except IndexError:
             item['long_desc'] = ''
-
-        item['short_desc'] = response.selector.xpath('//span[@class="productname"]/text()').extract()[0].strip()
+        try:
+            item['short_desc'] = response.selector.xpath('//span[@class="productname"]/text()').extract()[0].strip()
+        except IndexError:
+            return
         item['product_link'] = response.selector.xpath('//head/link[@rel="canonical"]/@href').extract()[0]
 
         item['cat_1'] = ""
