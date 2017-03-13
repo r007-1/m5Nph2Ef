@@ -21,7 +21,6 @@ class Shoptiques(scrapy.Spider):
 			url = tag.findNext("loc").text
 			start_urls.append(url)
 	#start_urls = start_urls[62050:]
-	start_urls = start_urls[0:10]
 	def parse(self, response):
 		#client = algoliasearch.Client("BTPCHYHQQY", "e68eda57aa7bd4b52dd27e9226dec21a")
 		#index = client.init_index('products')
