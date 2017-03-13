@@ -16,7 +16,7 @@ class Shoptiques(scrapy.Spider):
 	index = bs(requests.get(index).text, "lxml").find_all("sitemap")
 	for sitemap in index:
 		s = sitemap.findNext("loc").text
-		tags = bs(requests.get(s).text, "lxml").find_all("loc")
+		tags = bs(requests.get(s).text, "lxml").find_all("url")
 		for tag in tags:
 			url = tag.findNext("loc").text
 			start_urls.append(url)

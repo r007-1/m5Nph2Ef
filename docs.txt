@@ -10,7 +10,21 @@ Extras/lib/python/six-1.4.1-py2.7.egg-info'
 
 pip install -r requirements.txt
 
-
+## Setting up on Linux
+- 'apt install python-pip --fix-missing'
+- 'export LC_ALL=C'
+- 'sudo pip install lxml'
+- `sudo pip install --ignore-installed six`
+- `sudo pip install requests`
+- `sudo pip install Twisted==16.4.1`
+- `sudo apt-get install build-essential libssl-dev libffi-dev python-dev`
+- `/bin/sh -c 'apt-get install -y aptitude'`
+- `sudo apt-get update`
+- `sudo apt-get install build-essential libssl-dev libffi-dev python-dev --fix-missing`
+- `pip install cryptography`
+- `pip install scrapy`
+- `pip install beautifulsoup4`
+- `git clone https://github.com/r007-1/m5Nph2Ef.git`
 
 ????
 ## Requirements.txt
