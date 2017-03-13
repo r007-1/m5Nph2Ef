@@ -11,6 +11,7 @@ class Asos(scrapy.Spider):
     name = "asos-us"
     allowed_domains = ["us.asos.com"]
     start_urls = []
+    '''
     sitemaps = []
     sitemap_main = ["http://us.asos.com/sitemap.ashx"]
     sitemap_main = ["http://us.asos.com/sitemap.xml?site=en-US"]
@@ -25,6 +26,7 @@ class Asos(scrapy.Spider):
                 start_urls.append(prod_link[0:prod_link.find("&mporgp")])
     #s = start_urls
     #start_urls = start_urls[86850:]
+    '''
     def parse(self, response):
         def find_between(s, first, last):
             try:
