@@ -29,8 +29,8 @@ class Harrods(scrapy.Spider):
     for s in start_urls:
         if 'product' in s:
             su.append(s)
-    start_urls = su
-    start_urls = start_urls[1000:1120]
+            start_urls = su
+    #start_urls = start_urls[1000:1120]
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!
         random.seed(1412112 + datetime) #Don't change!
@@ -40,12 +40,15 @@ class Harrods(scrapy.Spider):
 
         item['affiliate_partner'] = "viglink"
         item['brand'] = "Harrods"
+        item['brand'].encode('utf-8', 'ignore')
         try:
             item['long_desc'] = response.selector.xpath('//p[@class="description"]/text()').extract()[0]
+            item['long_desc'].encode('utf-8', 'ignore')
         except IndexError:
             item['long_desc'] = ''
         try:
             item['short_desc'] = response.selector.xpath('//span[@class="productname"]/text()').extract()[0].strip()
+            item['short_desc'].encode('utf-8', 'ignore')
         except IndexError:
             return
         item['product_link'] = response.selector.xpath('//head/link[@rel="canonical"]/@href').extract()[0]
