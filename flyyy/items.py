@@ -9,7 +9,7 @@ import scrapy
 
 class NuyolkItem(scrapy.Item):
     # define the fields for your item here like:
-    objectID = scrapy.Field()
+    ###objectID = scrapy.Field() WTFFF is this?!
     is_available = scrapy.Field()
     affiliate_partner = scrapy.Field()
     prod_id = scrapy.Field()
