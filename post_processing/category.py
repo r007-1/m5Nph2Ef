@@ -6,6 +6,7 @@ import gensim
 import numpy as np
 import math
 import random
+import json
 
 ### TO DO
 def train_w2v():
@@ -73,9 +74,9 @@ def train_cat_nn():
     savePath = saver.save(sess, 'post_processing/categorization_091517.ckpt')
     return
 
-def generate_cat():
-    fn = "post_processing/categorization_all_input_clean_091517.csv"
-    f = p.read_csv(fn)
+def generate_cat(fnn):
+    fn = fnn
+    f = p.read_json(fn)
     f = f.replace(np.nan, '', regex=True)  # Replace nan values with ""
 
     data = list(f.loc[:, "long_desc_sh"])
@@ -92,7 +93,6 @@ def generate_cat():
     s = np.array(sentences)[np.array(keep)]
 
     X_all = load_X_all(s, model)
-
 
     ######################################################################
     fn = "post_processing/cat_tr_t_raw_Xy_50w.csv"
@@ -164,24 +164,28 @@ def generate_cat():
 
     y_cat = [cats[int(x)] for x in y_cat_id]
 
-    fn = "post_processing/categorization_all_input_clean_091517.csv"
-    f = p.read_csv(fn)
+    fn = fnn
+    f = p.read_json(fn)
     f = f.replace(np.nan, '', regex=True)
 
-    f = f.loc[keep,:]
-    f = f.assign(cat=y_cat)
+    f = f.loc[keep,:] ##### Check later TODO
+    f = f.assign(cat_1=y_cat)
+    f = f.drop("long_desc_sh", 1)
 
-    return f
-
-
-
-
-
-
+    z = json.loads(f.to_json(orient='records'))
+    fn = fn.replace(".json", "") + "_with_cat.json"
+    with open(fn, 'w') as outfile:
+        json.dump(z, outfile)
+    return z
 
 
 ########### HELPER FUNCTIONS ######################
 def load_data(sentences, yraw, indices):
+    words_max = 59
+    model_width = 250
+    model_size = model_width * words_max
+
+    cats = np.array(['beauty & health', 'electronics', 'home', 'kids', 'men', 'men & women', 'others', 'women'])
     training = sentences[indices]
     yraw_train = yraw[indices]
     ymat_train = np.zeros((len(indices), len(cats)))

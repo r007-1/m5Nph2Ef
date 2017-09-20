@@ -2,64 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb6bc5f5-77aa-483a-95c6-a24f51c43210" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flyyy/spiders/belk.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/post_processing/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/post_processing/categories.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/post_processing/category.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/post_processing/tutorial_tf_w2v.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/post_processing/update.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utilities/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utilities/email.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utilities/es.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utilities/fix.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utilities/pipeline.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utilities/test_format.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/a" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/add.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/edit.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/barneys.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/harrods.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/nsbrands.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/revolve.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/saks-fifth-avenue.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/saks-off-5th.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/selfridges-brands.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/selfridges.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/shoptiques-brands.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flyyy/spiders/shoptiques-done.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/harrods_test.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logstash.conf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/manage.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mongo2csv.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/move_files.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/s13-edited.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/s14.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/s21.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/sb11-edited.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/sb11.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/sb12-edited.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/sb12.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/sb13.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/sbrands.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/selfridges-brands.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/sf1.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/products/shoptiques-brands.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/rdo.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/savetoindex.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/shoptiques_test.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/status.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/utilities.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/flyyy/spiders/needsupply.py" afterPath="$PROJECT_DIR$/flyyy/spiders/not updated/needsupply.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/flyyy/spiders/build.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flyyy/items.py" afterPath="$PROJECT_DIR$/flyyy/items.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flyyy/spiders/aha-life.py" afterPath="$PROJECT_DIR$/flyyy/spiders/aha-life.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flyyy/spiders/asos.py" afterPath="$PROJECT_DIR$/flyyy/spiders/asos.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flyyy/spiders/belk.py" afterPath="$PROJECT_DIR$/flyyy/spiders/belk.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flyyy/spiders/hbx.py" afterPath="$PROJECT_DIR$/flyyy/spiders/hbx.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flyyy/spiders/shoptiques.py" afterPath="$PROJECT_DIR$/flyyy/spiders/shoptiques.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flyyy/spiders/theoutnet.py" afterPath="$PROJECT_DIR$/flyyy/spiders/theoutnet.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/post_processing/categories.py" afterPath="$PROJECT_DIR$/post_processing/categories.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/post_processing/categorization_clean_data.R" afterPath="$PROJECT_DIR$/post_processing/categorization_clean_data.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/post_processing/category.py" afterPath="$PROJECT_DIR$/post_processing/category.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utilities/pipeline.py" afterPath="$PROJECT_DIR$/utilities/pipeline.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utilities/test_format.py" afterPath="$PROJECT_DIR$/utilities/test_format.py" />
     </list>
     <ignored path="m5Nph2Ef.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,40 +34,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="es.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utilities/es.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="25" column="18" lean-forward="true" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="belk.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="belk.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/flyyy/spiders/belk.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="27" column="17" lean-forward="true" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+            <state relative-caret-position="311">
+              <caret line="25" column="23" lean-forward="false" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_format.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utilities/test_format.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="133" column="23" lean-forward="false" selection-start-line="133" selection-start-column="23" selection-end-line="133" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#336#459#0" expanded="false" />
-                <element signature="e#500#619#0" expanded="false" />
-                <element signature="e#652#2131#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -122,79 +49,9 @@
       <file leaf-file-name="hbx.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/flyyy/spiders/hbx.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="129" column="58" lean-forward="false" selection-start-line="129" selection-start-column="58" selection-end-line="129" selection-end-column="58" />
+            <state relative-caret-position="293">
+              <caret line="44" column="12" lean-forward="true" selection-start-line="44" selection-start-column="12" selection-end-line="45" selection-end-column="18" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="theoutnet.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/flyyy/spiders/theoutnet.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="6" lean-forward="true" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pipeline.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utilities/pipeline.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="update.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/post_processing/update.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="58" column="19" lean-forward="false" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-                <element signature="e#368#1500#0" expanded="false" />
-                <element signature="e#2548#3551#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="categories.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/post_processing/categories.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="123" selection-end-column="23" />
-              <folding>
-                <element signature="e#18#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="category.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/post_processing/category.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-              <folding>
-                <element signature="e#18#41#0" expanded="true" />
-                <element signature="e#2487#5841#0" expanded="false" />
-                <element signature="e#6818#7537#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -210,16 +67,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>open</find>
-      <find>bet</find>
-      <find>p[87</find>
-      <find>es =</find>
-      <find>up =</find>
       <find>float(response.selector.xpath(&quot;//*[@class='standardprice']/input/@value&quot;).extract()[0].replace(&quot;,&quot;, &quot;&quot;))</find>
       <find>./</find>
       <find>MongoClient</find>
       <find>yraw_train</find>
-      <find>load_data(</find>
       <find>classification</find>
       <find>print(</find>
       <find>= 0</find>
@@ -240,6 +91,12 @@
       <find>post-processing</find>
       <find>load_X_</find>
       <find>X_all</find>
+      <find>is_attr_type</find>
+      <find>is_attr_type(</find>
+      <find>X_train, ymat_train =</find>
+      <find>load_data</find>
+      <find>load_data(</find>
+      <find>standardprice</find>
     </findStrings>
     <replaceStrings>
       <replace>post_processing</replace>
@@ -269,19 +126,20 @@
         <option value="$PROJECT_DIR$/post-processing/tutorial_tf_w2v.py" />
         <option value="$PROJECT_DIR$/cache/test_format.py" />
         <option value="$PROJECT_DIR$/flyyy/spiders/asos.py" />
-        <option value="$PROJECT_DIR$/flyyy/spiders/hbx.py" />
-        <option value="$PROJECT_DIR$/utilities/test_format.py" />
-        <option value="$PROJECT_DIR$/flyyy/spiders/shoptiques.py" />
-        <option value="$PROJECT_DIR$/flyyy/spiders/theoutnet.py" />
-        <option value="$PROJECT_DIR$/utilities/pipeline.py" />
         <option value="$PROJECT_DIR$/post-processing/update.py" />
         <option value="$PROJECT_DIR$/post-processing/categories.py" />
         <option value="$PROJECT_DIR$/post-processing/category.py" />
-        <option value="$PROJECT_DIR$/post_processing/categories.py" />
-        <option value="$PROJECT_DIR$/flyyy/spiders/belk.py" />
-        <option value="$PROJECT_DIR$/post_processing/category.py" />
-        <option value="$PROJECT_DIR$/flyyy/spiders/aha-life.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/flyyy/spiders/build.py" />
+        <option value="$PROJECT_DIR$/post_processing/categories.py" />
+        <option value="$PROJECT_DIR$/post_processing/category.py" />
+        <option value="$PROJECT_DIR$/utilities/test_format.py" />
+        <option value="$PROJECT_DIR$/utilities/pipeline.py" />
+        <option value="$PROJECT_DIR$/flyyy/spiders/shoptiques.py" />
+        <option value="$PROJECT_DIR$/flyyy/spiders/hbx.py" />
+        <option value="$PROJECT_DIR$/flyyy/spiders/aha-life.py" />
+        <option value="$PROJECT_DIR$/flyyy/spiders/theoutnet.py" />
+        <option value="$PROJECT_DIR$/flyyy/spiders/belk.py" />
       </list>
     </option>
   </component>
@@ -322,6 +180,66 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="m5Nph2Ef" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="m5Nph2Ef" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="m5Nph2Ef" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utilities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="m5Nph2Ef" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="m5Nph2Ef" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="post_processing" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="m5Nph2Ef" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="m5Nph2Ef" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flyyy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="m5Nph2Ef" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="m5Nph2Ef" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flyyy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spiders" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -454,12 +372,12 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34087238" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34931508" sideWeight="0.503231" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39452055" sideWeight="0.503231" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.360274" sideWeight="0.49676898" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.360274" sideWeight="0.49353796" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42328766" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2931507" sideWeight="0.49676898" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -501,12 +419,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cache/asos-sss.csv" />
     <entry file="file://$PROJECT_DIR$/test.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -754,39 +671,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyyy/spiders/asos.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="183" column="26" lean-forward="true" selection-start-line="183" selection-start-column="26" selection-end-line="183" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#35#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flyyy/spiders/shoptiques.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utilities/test_format.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="133" column="23" lean-forward="false" selection-start-line="133" selection-start-column="23" selection-end-line="133" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#336#459#0" expanded="false" />
-            <element signature="e#500#619#0" expanded="false" />
-            <element signature="e#652#2131#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/post_processing/tutorial_tf_w2v.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
@@ -798,31 +682,9 @@
     <entry file="file://$PROJECT_DIR$/utilities/es.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
-          <caret line="25" column="18" lean-forward="true" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+          <caret line="25" column="18" lean-forward="false" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/post_processing/category.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="e#18#41#0" expanded="true" />
-            <element signature="e#2487#5841#0" expanded="false" />
-            <element signature="e#6818#7537#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/post_processing/categories.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="123" selection-end-column="23" />
-          <folding>
-            <element signature="e#18#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -839,55 +701,118 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utilities/pipeline.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+        <state relative-caret-position="34">
+          <caret line="2" column="6" lean-forward="true" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyyy/spiders/hbx.py">
+    <entry file="file://$PROJECT_DIR$/post_processing/categories.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="129" column="58" lean-forward="false" selection-start-line="129" selection-start-column="58" selection-end-line="129" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flyyy/spiders/aha-life.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="18" column="17" lean-forward="true" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+        <state relative-caret-position="216">
+          <caret line="107" column="40" lean-forward="true" selection-start-line="107" selection-start-column="40" selection-end-line="107" selection-end-column="40" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flyyy/spiders/belk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="27" column="17" lean-forward="true" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#18#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/flyyy/spiders/theoutnet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+        <state relative-caret-position="221">
+          <caret line="24" column="37" lean-forward="false" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/flyyy/spiders/shoptiques.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="6" lean-forward="true" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+        <state relative-caret-position="272">
+          <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyyy/spiders/aha-life.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyyy/spiders/asos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2890">
+          <caret line="183" column="26" lean-forward="true" selection-start-line="183" selection-start-column="26" selection-end-line="183" selection-end-column="26" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyyy/spiders/build.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="545">
+          <caret line="43" column="21" lean-forward="false" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilities/pipeline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/post_processing/category.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2342">
+          <caret line="21" column="35" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="245" selection-end-column="16" />
+          <folding>
+            <element signature="e#18#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilities/test_format.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="139" column="27" lean-forward="false" selection-start-line="139" selection-start-column="27" selection-end-line="139" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#336#459#0" expanded="false" />
+            <element signature="e#656#2135#0" expanded="false" />
+            <element signature="e#2171#4830#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyyy/spiders/hbx.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="44" column="12" lean-forward="true" selection-start-line="44" selection-start-column="12" selection-end-line="45" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyyy/spiders/belk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="25" column="23" lean-forward="false" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

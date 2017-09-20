@@ -15,7 +15,7 @@ class Shoptiques(scrapy.Spider):
 	name = "shoptiques"
 	allowed_domains = ["shoptiques.com"]
 	is_test_run = False
-	is_run = True
+	is_run = False
 	start_urls = []
 	if (is_run):
 		index = "http://www.shoptiques.com/sitemap/sitemap-index.xml"

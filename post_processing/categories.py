@@ -8,29 +8,86 @@ import math
 import random
 
 ## Load data
-f = p.read_csv("post_processing/cat_tr_t_raw_Xy_50w.csv")
+f = p.read_csv("post-processing/cat_tr_t_raw_Xy_50w.csv")
 f = f.replace(np.nan, '', regex=True) #Replace nan values with ""
 
-fn = "post_processing/categorization_all_input_clean_091517.csv"
+fn = "post-processing/categorization_all_input_clean_091517.csv"
 f = p.read_csv(fn)
 
 data = list(f.loc[:,"long_desc_sh"]) ####??? ##TODO
 data = [str(x).strip() for x in data]
 
+## TODO: PRE-PROCESSING
+# Pre-process data
+## tokenize
+## remove common words
+## stem thing
+## remove <.*>
+## remove brand names
+##
+#
+# class StemmingHelper(object):
+#     """
+#     Class to aid the stemming process - from word to stemmed form,
+#     and vice versa.
+#     The 'original' form of a stemmed word will be returned as the
+#     form in which its been used the most number of times in the text.
+#     """
+#
+#     # This reverse lookup will remember the original forms of the stemmed
+#     # words
+#     word_lookup = {}
+#
+#     @classmethod
+#     def stem(cls, word):
+#         """
+#         Stems a word and updates the reverse lookup.
+#         """
+#
+#         # Stem the word
+#         stemmed = global_stemmer.stem(word)
+#
+#         # Update the word lookup
+#         if stemmed not in cls.word_lookup:
+#             cls.word_lookup[stemmed] = {}
+#         cls.word_lookup[stemmed][word] = (
+#             cls.word_lookup[stemmed].get(word, 0) + 1)
+#
+#         return stemmed
+#
+#     @classmethod
+#     def original_form(cls, word):
+#         """
+#         Returns original form of a word given the stemmed version,
+#         as stored in the word lookup.
+#         """
+#
+#         if word in cls.word_lookup:
+#             return max(cls.word_lookup[word].keys(),
+#                        key=lambda x: cls.word_lookup[word][x])
+#         else:
+#             return word
 
+
+## Generate word2vec
 sentences = [x.split() for x in data]
 model = word2vec.Word2Vec(sentences, min_count=25, window=3, size=250, workers=4, iter=50, sg=0)
-m = 'post_processing/w2v_all_091517'
+m = 'post-processing/w2v_all_091517'
 model.save(m)
 
+## Test
+##TODO
 
 
+## Create a performance measure
+##TODO
 
-###########################
+##### NEURAL NETS
 
+## Prepare data
 
-m = 'post_processing/w2v_50k_sh'
-m = 'post_processing/w2v_all_091517'
+m = 'post-processing/w2v_50k_sh'
+m = 'post-processing/w2v_all_091517'
 model = word2vec.Word2Vec.load(m)
 
 words_max = 59
@@ -110,7 +167,7 @@ correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 print(accuracy.eval(feed_dict={x: X_train, y_: ymat_train}))
 
-savePath = saver.save(sess, 'post_processing/categorization_091517.ckpt')
+savePath = saver.save(sess, 'post-processing/categorization_091517.ckpt')
 
 
 X_train, ymat_train = load_data(sentences, yraw, testing1_indices)

@@ -12,11 +12,13 @@ from collections import Counter
 import csv
 import numpy
 import json
-import os
 from utilities.test_format import test_output, is_attr_type, remove_duplicates, test_format_postmine, convert_to_usd
+from post_processing.category import generate_cat
+import os
 
+fn = "products/outnet_20170919.json"
 
-###### TODO: Figure out file format for each
+###### TODO: Figure out file format for each step
 ###### TODO: Create logs in Sheets
 
 
@@ -29,13 +31,21 @@ from utilities.test_format import test_output, is_attr_type, remove_duplicates, 
 
 ## Double check format
 #### Fix format deficiencies until okay
-
+is_okay = test_format_postmine(fn)
+if (not is_okay):
+    print('eehhh')
 
 ## Add category
 def add_main_cat(fn):
+    ### DO IN R
+    return
 
+fn = fn.replace(".json", "_clean_ld.json")
+d = generate_cat(fn)
 
-
+fn = fn.replace(".json", "_with_cat.json")
+is_okay = test_format_postmine(fn)
+#### Figure out why prod_id is str!!!!! :(
 
 ## Update MongoDB
 #### If prod_id exists, update variables

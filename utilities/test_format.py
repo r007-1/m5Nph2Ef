@@ -24,7 +24,7 @@ def test_output(test_name, test, t):
     t[test_name] = test
     return
 
-def is_attr_type(attr_name, type):
+def is_attr_type(attr_name, type, ff):
     test_array = [isinstance(x[attr_name], type) for x in ff]
     test = sum(test_array) == len(test_array)
     return test
@@ -81,28 +81,28 @@ def test_format_postmine(fn):
     test_output("The product links are unique", are_links_uniq, t)
 
     ## prod_id type is str
-    is_prod_id_str = is_attr_type("prod_id", str) or is_attr_type("prod_id", unicode)
+    is_prod_id_str = is_attr_type("prod_id", str, ff) or is_attr_type("prod_id", unicode, ff)
     test_output("The prod_id type is str", is_prod_id_str, t)
 
     ## on_sale and is_available are boolean
-    test_output("The on_sale type is bool", is_attr_type("on_sale", bool), t)
-    test_output("The is_available type is bool", is_attr_type("is_available", bool), t)
+    test_output("The on_sale type is bool", is_attr_type("on_sale", bool, ff), t)
+    test_output("The is_available type is bool", is_attr_type("is_available", bool, ff), t)
 
     ## Make sure there are no list items
     has_no_list = True
     for k in ff[0].keys():
-        has_no_list = has_no_list or is_attr_type(k, list)
+        has_no_list = has_no_list or is_attr_type(k, list, ff)
     test_output("There are no list types", has_no_list, t)
 
     ## Prices should be ints
     price_attrs = ['price', 'price_orig', 'price_perc_discount', 'price_sale']
     for p in price_attrs:
-        test_output("The " + p + " type is int", is_attr_type(p, int), t)
+        test_output("The " + p + " type is int", is_attr_type(p, int, ff), t)
 
     ## Dates should be strings
     date_attrs = ["date_added", "date_last_updated"]
     for d in date_attrs:
-        test_output("The " + d + " type is str", is_attr_type(d, str) or is_attr_type(d, unicode), t)
+        test_output("The " + d + " type is str", is_attr_type(d, str, ff) or is_attr_type(d, unicode, ff), t)
 
     ## TODO Make sure there are no useless crap in long_desc
 
@@ -159,3 +159,4 @@ def convert_to_usd(fn):
     fn = fn.replace(".json", "") + "_usd" + ".json"
     with open(fn, 'w') as outfile:
         json.dump(z, outfile)
+    return z

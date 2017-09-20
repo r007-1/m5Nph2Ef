@@ -17,7 +17,7 @@ class HBX(scrapy.Spider):
     allowed_domains = ["hbx.com"]
 
     is_test_run = False
-    is_run = True
+    is_run = False
 
     start_urls = []
 
