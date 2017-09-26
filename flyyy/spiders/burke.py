@@ -12,8 +12,6 @@ import numpy
 import numpy as np
 #import js2xml, js2xml.jsonlike
 
-##TODO: Fix ld error: https://www.burkedecor.com/products/tim-walker-pictures-teneues
-
 
 def find_between(s, first, last):
     try:

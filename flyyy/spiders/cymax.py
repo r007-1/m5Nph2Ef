@@ -40,8 +40,8 @@ class Cymax(scrapy.Spider):
             for tag in tags:
                 url = tag.findNext("loc").text
                 start_urls.append(url)
-            if is_test_run:
-                start_urls = start_urls[100:1000]
+        if is_test_run:
+            start_urls = start_urls[1000:1100]
         start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))

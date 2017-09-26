@@ -38,8 +38,8 @@ class LampsPlus(scrapy.Spider):
             tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
             for tag in tags:
                 start_urls.append(tag.findNext("loc").text)
-            if is_test_run:
-                start_urls = start_urls[10000:10100]
+        if is_test_run:
+            start_urls = start_urls[10000:10100]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
