@@ -20,14 +20,17 @@ def find_between(s, first, last):
     except ValueError:
         return ""
 
-class Belk(scrapy.Spider):
-    name = "belk"
-    allowed_domains = ["belk.com"]
-    is_test_run = False
-    is_run = True
+#### CRAWLER BLOCKED
+
+class Build(scrapy.Spider):
+    name = "build"
+    allowed_domains = ["build.com"]
+    is_test_run = True
+    is_run = False
     start_urls = []
     if (is_run):
-        sitemap_index = "http://www.belk.com/sitemap_index.xml"
+        sitemap_index = "https://www.build.com/sitemap_productfamily_index.xml"
+        sitemap_index = "https://www.build.com/sitemap_productfamily1.xml"
         sitemaps = []
         sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
         for st in sitemap_tags:
@@ -41,7 +44,7 @@ class Belk(scrapy.Spider):
             for tag in tags:
                 start_urls.append(tag.findNext("loc").text)
         if is_test_run:
-            start_urls = start_urls[100:1000]
+            start_urls = start_urls[0:10]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
@@ -59,10 +62,7 @@ class Belk(scrapy.Spider):
         #item['upc'] ##TODO
         item['merchant_id'] = "IXR49N"
 
-        try:
-            item['brand'] = response.selector.xpath('//*[@itemprop="brand"]/text()').extract()[0]
-        except:
-            item['brand'] = ""
+        item['brand'] = response.selector.xpath('//*[@itemprop="brand"]/text()').extract()[0]
         item['short_desc'] = response.selector.xpath('//*[@class="brand-name"]/text()').extract()[0].strip()
         ld = response.selector.xpath('//meta[@name="description"]/@content').extract()
         ld.extend(response.selector.xpath('//ul[@class="copyline"]/li/text()').extract())
@@ -87,14 +87,7 @@ class Belk(scrapy.Spider):
             item['price'] = item['price_sale']
             item['on_sale'] = True
         except:
-            try:
-                item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/input/@value").extract()[0].replace(",", "")))
-            except:
-                try:
-                    item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/span/text()").extract()[0].replace(",", "")))
-                except:
-                    print("??? SKIPPED!")
-                    return
+            item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/input/@value").extract()[0].replace(",", "")))
             item['price'] = item['price_orig']
             item['price_sale'] = item['price_orig']
             item['price_perc_discount'] = 0

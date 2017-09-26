@@ -90,6 +90,53 @@ for i in range(len(data)):
     data[i]['date_last_updated'] = time_now
 
 
+## Run only once: change _ids to prod_ids
+is_first_run = True
+if (is_first_run):
+    delete_existing = True
+    es = Elasticsearch('https://elastic:vlox4VZ9OF7aGC01O2lufids@fbc3032a2a91be69517a70b3d75f4eaa.us-east-1.aws.found.io:9243')
+    q = 'merchant: ' + str(data[0]['merchant'])
+    qq = {
+        'from': 0,
+        'size': 10000,
+        'query': {
+            'query_string': {'query': q}
+        }
+        ,"_source": ["date_last_updated", "product_link", "prod_id"]
+    }
+    h = list()
+    r = es.search(body=qq, scroll='1m', index='products', doc_type='product')
+    total = r['hits']['total']
+    batches = int(math.ceil(total*1.0/qq['size']))
+    for i in range(0, batches):
+        if i==0:
+            r = es.search(body=qq, scroll='1m', index='products', doc_type='product')
+            sid = r['_scroll_id']
+            hits = r['hits']['hits']
+            h.extend(hits)
+        else:
+            r = es.scroll(scroll_id=sid, scroll='1m')
+            sid = r['_scroll_id']
+            hits = r['hits']['hits']
+            h.extend(hits)
+    hits = h
+    validhits = [x['_source']!={} for x in hits]
+    hits = numpy.array(hits)[numpy.array(validhits)]
+
+    if (delete_existing):
+        ## Delete product_link if exists in prod_id != '_id (one-off adjustment)
+        new_links = [x['product_link'] for x in data]
+        linksss = [x['_source']['product_link'] for x in hits]
+        will_del = [x['_source']['product_link'] in new_links and x['_id'] != x['_source']['prod_id'] for x in hits]
+        ids = [x['_id'] for x in hits]
+        del_ids = numpy.array(ids)[numpy.array(will_del)]
+        delete = [{"_id": d, "_type": "product", "_index": "products", '_op_type': 'delete'} for d in del_ids]
+        batches = int(math.ceil(len(delete)/100.0))
+        for i in range(0, batches):
+            dels = delete[i*100:min((i+1)*100, len(delete))]
+            helpers.bulk(es, dels, chunk_size=100)
+            print(min((i+1)*100, len(delete)))
+
 if (is_okay):
     client = MongoClient('mongodb://engineering:ZrcyknglNEC1E78KQhI6Q3Y8iWyd4nW7@ds119030-a0.mlab.com:19030,ds119030-a1.mlab.com:19030/glarket?replicaSet=rs-ds119030')
     db = client.glarket
@@ -97,8 +144,6 @@ if (is_okay):
     batches = int(math.ceil(len(data) / 50.0))
     for i in range(0, batches):
         upload = data[i * 50:min((i + 1) * 50, len(data))]
-        #pls = [x['product_link'] for x in upload]
-        #keys = [{"product_link": v} for v in pls]
         reqs = [pymongo.ReplaceOne({'product_link': x['product_link']}, x, upsert=True) for x in upload]
         try:
             result = products.bulk_write(reqs, ordered=False)
@@ -129,53 +174,38 @@ for i in range(0, batches):
 
 #####################################################
 ## Get stuffs from ES
-delete_existing = True
 delete_obsolete = True
-
-q = 'merchant: ' + str(data[0]['merchant'])
-qq = {
-    'from': 0,
-    'size': 10000,
-    'query': {
-        'query_string': {'query': q}
-    }
-    ,"_source": ["date_last_updated", "product_link", "prod_id"]
-}
-h = list()
-r = es.search(body=qq, scroll='1m', index='products', doc_type='product')
-total = r['hits']['total']
-batches = int(math.ceil(total*1.0/qq['size']))
-for i in range(0, batches):
-    if i==0:
-        r = es.search(body=qq, scroll='1m', index='products', doc_type='product')
-        sid = r['_scroll_id']
-        hits = r['hits']['hits']
-        h.extend(hits)
-    else:
-        r = es.scroll(scroll_id=sid, scroll='1m')
-        sid = r['_scroll_id']
-        hits = r['hits']['hits']
-        h.extend(hits)
-hits = h
-validhits = [x['_source']!={} for x in hits]
-hits = numpy.array(hits)[numpy.array(validhits)]
-
-if (delete_existing):
-    ## Delete product_link if exists in prod_id != '_id (one-off adjustment)
-    new_links = [x['product_link'] for x in data]
-    linksss = [x['_source']['product_link'] for x in hits]
-    will_del = [x['_source']['product_link'] in new_links and x['_id'] != x['_source']['prod_id'] for x in hits]
-    ids = [x['_id'] for x in hits]
-    del_ids = numpy.array(ids)[numpy.array(will_del)]
-    delete = [{"_id": d, "_type": "product", "_index": "products", '_op_type': 'delete'} for d in del_ids]
-    batches = int(math.ceil(len(delete)/100.0))
-    for i in range(0, batches):
-        dels = delete[i*100:min((i+1)*100, len(delete))]
-        helpers.bulk(es, dels, chunk_size=100)
-        print(min((i+1)*100, len(delete)))
-
+mining_date_minus_1 = '09/18/2017'
 
 if (delete_obsolete):
     ## Get obsolete date_last_updateds
-    dlus = [x['_source']['date_last_updated'] for x in hits]
-    is_not_recent = [x > time_now for x in dlus]
+    dlus = [x['_source']['date_last_updated'] < mining_date_minus_1 for x in hits]
+    is_not_recent = numpy.array(hits)[numpy.array(dlus)]
+
+    ## TODO: Fetch and save old products
+
+    ## Delete in ES
+    rm_oos = [{"_id": prod['_id'], "_type": "product", "_index": "products", '_op_type': 'delete'} for prod in is_not_recent]
+
+    batches = int(math.ceil(len(rm_oos) / 100.0))
+    for i in range(0, batches):
+        oos = rm_oos[i * 100:min((i + 1) * 100, len(rm_oos))]
+        z = helpers.bulk(es, oos, chunk_size=100)
+        print(min((i + 1) * 100, len(rm_oos)))
+
+    ## Delete in Mongo
+    client = MongoClient('mongodb://engineering:ZrcyknglNEC1E78KQhI6Q3Y8iWyd4nW7@ds119030-a0.mlab.com:19030,ds119030-a1.mlab.com:19030/glarket?replicaSet=rs-ds119030')
+    key = ''
+    client = MongoClient('mongodb://glarket:O04vjgawuA6AAHNvX6hZZKsX9nboUI9W@ds119030-a0.mlab.com:19030,ds119030-a1.mlab.com:19030/glarket?replicaSet=rs-ds119030')
+    db = client.glarket
+    products = db.products
+    batches = int(math.ceil(len(is_not_recent) / 50.0))
+    for i in range(0, batches):
+        delete = is_not_recent[i * 50:min((i + 1) * 50, len(is_not_recent))]
+        reqs = [pymongo.DeleteOne({'product_link': x['_source']['product_link']}) for x in delete]
+        try:
+            result = products.bulk_write(reqs, ordered=False)
+            print(result.bulk_api_result)
+            print("Batch: " + str(i) + "/" + str(batches) + "; " + str(i / (batches * 1.0) * 100) + "%")
+        except BulkWriteError as bwe:
+            print(bwe.details)

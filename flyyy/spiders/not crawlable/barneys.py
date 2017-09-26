@@ -1,31 +1,38 @@
 from bs4 import BeautifulSoup as bs
-from lxml import etree
+from lxml import etree, html
 import requests
 import scrapy
 from flyyy.items import NuyolkItem
-import random
 import time
+import datetime
+import random
+import math
+import csv
+import numpy
+import numpy as np
 
 
 #start 06/02/2016 03:18:22
 #end 2016-02-06 09:48:24
 #24844 products
 
+#### CRAWLER BLOCKED
+
 class Barneys(scrapy.Spider):
     name = "barneys"
     allowed_domains = ["barneys.com"]
-    start_urls = []
+start_urls = []
 
-    sm1 = "http://www.barneys.com/product-sitemap_bny.xml"
-    sm2 = "http://www.barneys.com/product-sitemap_bny1.xml"
+sm1 = "http://www.barneys.com/product-sitemap_bny.xml"
+sm2 = "http://www.barneys.com/product-sitemap_bny1.xml"
 
-    sitemapTags1 = bs(requests.get(sm1).text, "lxml").find_all("url")
-    sitemapTags2 = bs(requests.get(sm2).text, "lxml").find_all("url")
+sitemapTags1 = bs(requests.get(sm1).text, "lxml").find_all("url")
+sitemapTags2 = bs(requests.get(sm2).text, "lxml").find_all("url")
 
-    for sitemap1 in sitemapTags1:
-        start_urls.append(sitemap1.findNext("loc").text)
-    for sitemap2 in sitemapTags2:
-        start_urls.append(sitemap2.findNext("loc").text)
+for sitemap1 in sitemapTags1:
+    start_urls.append(sitemap1.findNext("loc").text)
+for sitemap2 in sitemapTags2:
+    start_urls.append(sitemap2.findNext("loc").text)
 
     def parse(self, response):
 

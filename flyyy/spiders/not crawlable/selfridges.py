@@ -1,34 +1,51 @@
 from bs4 import BeautifulSoup as bs
-from lxml import etree
+from lxml import etree, html
 import requests
 import scrapy
 from flyyy.items import NuyolkItem
-import random
 import time
+import datetime
+import random
+import math
+import csv
+import numpy
+import numpy as np
+
+
+#### CRAWLER BLOCKED
+
 
 class Selfridges(scrapy.Spider):
 	name = "selfridges"
 	allowed_domains = ["selfridges.com"]
+
+	is_run = False
+	is_test = True
+
 	start_urls = []
 	sitemap_main = "http://www.selfridges.com/sitemap.xml"
 	sitemaps = []
-	tags = bs(requests.get(sitemap_main).text, "lxml").find_all("sitemap")
-	for tag in tags:
-		t = tag.findNext("loc").text
-		if "US_en" in t:
-			sitemaps.append(t)
-
-	for sitemap in sitemaps:
-		tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
+	if (is_run):
+		tags = bs(requests.get(sitemap_main).text, "lxml").find_all("sitemap")
 		for tag in tags:
-			start_urls.append(tag.findNext("loc").text)
-
+			t = tag.findNext("loc").text
+			if "US_en" in t:
+				sitemaps.append(t)
+		for sitemap in sitemaps:
+			tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
+			for tag in tags:
+				url = tag.findNext("loc").text
+				if '/cat/' in url and url.count('-') >= 2:
+					start_urls.append(url)
+		if (is_test):
+			start_urls = start_urls[1000:1100]
+	start_urls = list(np.unique(start_urls))
 	def parse(self, response):
 		datetime = int(str(int(time.time()*100))) #Don't change!
 		random.seed(1412112 + datetime) #Don't change!
 		item = NuyolkItem() #Don't change!
 		try:
-			item['brand'] = "" #Needs post-processing!
+			item['brand'] = response.selector.xpath('//span[@class="brand"]/a/text()').extract()[0]
 			item['cat_code'] = ""
 			item['cat_1'] = "" #deprecate
 			item['cat_2'] = "" #deprecate

@@ -20,30 +20,26 @@ def find_between(s, first, last):
     except ValueError:
         return ""
 
-
-class Build(scrapy.Spider):
-    name = "build"
-    allowed_domains = ["build.com"]
+class LampsPlus(scrapy.Spider):
+    name = "lamps_plus"
+    allowed_domains = ["lampsplus.com"]
     is_test_run = True
-    is_run = False
+    is_run = True
     start_urls = []
-    if (is_run):
-        sitemap_index = "https://www.build.com/sitemap_productfamily_index.xml"
-        sitemap_index = "https://www.build.com/sitemap_productfamily1.xml"
-        sitemaps = []
-        sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
-        for st in sitemap_tags:
-            t = st.findNext("loc").text
-            if 'product' in t:
-                sitemaps.append(t)
+if (is_run):
+    sitemap_index = "http://www.lampsplus.com/sitemap-index.xml"
+    sitemaps = []
+    sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
+    for st in sitemap_tags:
+        t = st.findNext("loc").text
+        if 'products/' in t:
+            sitemaps.append(t)
+    for sitemap in sitemaps:
+        tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
+        for tag in tags:
+            start_urls.append(tag.findNext("loc").text)
         if is_test_run:
-            sitemaps = [sitemaps[0]]
-        for sitemap in sitemaps:
-            tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
-            for tag in tags:
-                start_urls.append(tag.findNext("loc").text)
-        if is_test_run:
-            start_urls = start_urls[0:10]
+            start_urls = start_urls[100:1000]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
@@ -61,7 +57,10 @@ class Build(scrapy.Spider):
         #item['upc'] ##TODO
         item['merchant_id'] = "IXR49N"
 
-        item['brand'] = response.selector.xpath('//*[@itemprop="brand"]/text()').extract()[0]
+        try:
+            item['brand'] = response.selector.xpath('//*[@itemprop="brand"]/text()').extract()[0]
+        except:
+            item['brand'] = ""
         item['short_desc'] = response.selector.xpath('//*[@class="brand-name"]/text()').extract()[0].strip()
         ld = response.selector.xpath('//meta[@name="description"]/@content').extract()
         ld.extend(response.selector.xpath('//ul[@class="copyline"]/li/text()').extract())
@@ -86,7 +85,14 @@ class Build(scrapy.Spider):
             item['price'] = item['price_sale']
             item['on_sale'] = True
         except:
-            item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/input/@value").extract()[0].replace(",", "")))
+            try:
+                item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/input/@value").extract()[0].replace(",", "")))
+            except:
+                try:
+                    item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/span/text()").extract()[0].replace(",", "")))
+                except:
+                    print("??? SKIPPED!")
+                    return
             item['price'] = item['price_orig']
             item['price_sale'] = item['price_orig']
             item['price_perc_discount'] = 0

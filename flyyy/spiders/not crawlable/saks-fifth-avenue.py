@@ -1,25 +1,31 @@
 from bs4 import BeautifulSoup as bs
-from lxml import etree
+from lxml import etree, html
 import requests
 import scrapy
 from flyyy.items import NuyolkItem
 import time
-import random
 import datetime
+import random
+import math
+import csv
+import numpy
+import numpy as np
+
+##BLOCKED CRAWLER
 
 class SaksFifthAvenue(scrapy.Spider):
     name = "saks-fifth-avenue"
     allowed_domains = ["saksfifthavenue.com"]
-    start_urls = []
-    sitemaps = []
+start_urls = []
+sitemaps = []
 
-    sitemap_main = ["http://www.saksfifthavenue.com/sitemap/index.xml"]
-    '''
-    main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
-    for main_tag in main_tags:
-        if 'detail' in main_tag:
-            sitemaps.append(main_tag.findNext("loc").text)
-    '''
+sitemap_main = ["http://www.saksfifthavenue.com/sitemap/index.xml"]
+
+main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
+for main_tag in main_tags:
+    if 'detail' in main_tag:
+        sitemaps.append(main_tag.findNext("loc").text)
+
     for i in range(0,12):
         sitemaps.append("http://www.saksfifthavenue.com/sitemap/detail" + str(i) + ".xml")
     for sitemap in sitemaps:

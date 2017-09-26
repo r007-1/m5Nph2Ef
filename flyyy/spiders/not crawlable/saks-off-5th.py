@@ -10,11 +10,11 @@ import datetime
 class SaksOff5th(scrapy.Spider):
     name = "saks-off-5th"
     allowed_domains = ["saksoff5th.com"]
-    start_urls = []
-    sitemaps = []
+start_urls = []
+sitemaps = []
 
-    sitemap_main = ["http://www.saksoff5th.com/sitemap/index.xml"]
-    main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
+sitemap_main = ["http://www.saksoff5th.com/sitemap/index.xml"]
+main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
     for main_tag in main_tags:
         sitemaps.append(main_tag.findNext("loc").text)
 

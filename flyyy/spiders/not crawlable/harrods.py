@@ -1,24 +1,31 @@
 #http://www.harrods.com/product/flowerbed-embroidered-dress/needle-and-thread/000000000005459400
 
 from bs4 import BeautifulSoup as bs
-from lxml import etree
+from lxml import etree, html
 import requests
 import scrapy
 from flyyy.items import NuyolkItem
 import time
-import random
 import datetime
+import random
+import math
+import csv
+import numpy
+import numpy as np
+
+
+#### CANNOT FIND SITEMAP
 
 class Harrods(scrapy.Spider):
     name = "harrods"
     allowed_domains = ["harrods.com"]
-    start_urls = []
-    sitemaps = []
+start_urls = []
+sitemaps = []
 
-    sitemap_main = ["http://www.harrods.com/sitemap-index.xml"]
-    main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
-    for main_tag in main_tags:
-        sitemaps.append(main_tag.findNext("loc").text)
+sitemap_main = ["http://www.harrods.com/sitemap-index.xml"]
+main_tags = bs(requests.get(sitemap_main[0]).text, "lxml").find_all("sitemap")
+for main_tag in main_tags:
+    sitemaps.append(main_tag.findNext("loc").text)
 
     for sitemap in sitemaps:
         tags = bs(requests.get(sitemap).text, "lxml").find_all("url")

@@ -10,6 +10,8 @@ import math
 ##import numpy
 import csv
 
+### CRAWLER BLOCKEd
+
 class NeedSupply(scrapy.Spider):
     name = "needsupply"
     allowed_domains = ["needsupply.com"]

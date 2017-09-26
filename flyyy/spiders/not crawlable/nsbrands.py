@@ -8,11 +8,11 @@ import scrapy
 class NSBrands(scrapy.Spider):
   name = "nsbrands"
   allowed_domains = ["needsupply.com"]
-  start_urls = []
-  sitemaps = ["https://needsupply.com/media/sitemap.xml"]
+start_urls = []
+sitemaps = ["https://needsupply.com/media/sitemap.xml"]
 
-  for sitemap in sitemaps:
-    tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
+for sitemap in sitemaps:
+  tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
   for tag in tags:
     if (tag.findNext("loc").text[len(tag.findNext("loc").text)-1] == "."):
       start_urls.append(tag.findNext("loc").text[0:len(tag.findNext("loc").text)-1])
