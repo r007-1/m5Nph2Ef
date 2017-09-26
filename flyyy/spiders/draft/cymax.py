@@ -27,27 +27,25 @@ class Cymax(scrapy.Spider):
     allowed_domains = ["cymax.com"]
     is_test_run = False
     is_run = True
-start_urls = []
-if (is_run):
-    sitemap_index = "https://www.cymax.com/sitemap.xml"
-    sitemaps = []
-    sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
-    for st in sitemap_tags:
-        t = st.findNext("loc").text
-        sitemaps.append(t)
-for sitemap in sitemaps:
-    tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
-    for tag in tags:
-        url = tag.findNext("loc").text
-        if '/products/' in url:
-            start_urls.append(url)
-        if is_test_run:
-            start_urls = start_urls[100:1000]
-    start_urls = list(np.unique(start_urls))
+    start_urls = []
+    if (is_run):
+        sitemap_index = "https://www.cymax.com/sitemap.xml"
+        sitemaps = []
+        sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
+        for st in sitemap_tags:
+            t = st.findNext("loc").text
+            sitemaps.append(t)
+        for sitemap in sitemaps:
+            tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
+            for tag in tags:
+                url = tag.findNext("loc").text
+                start_urls.append(url)
+            if is_test_run:
+                start_urls = start_urls[100:1000]
+        start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
         random.seed(1412112 + datetime)
-
         item = NuyolkItem()
         item['is_available'] = True
         item['affiliate_partner'] = "viglink"
@@ -58,7 +56,7 @@ for sitemap in sitemaps:
         item['merchant'] = "Belk"
         item['merchant_prod_id'] = response.url.split("/")[-1].replace(".html", "")
         #item['upc'] ##TODO
-        item['merchant_id'] = "IXR49N"
+        item['merchant_id'] = "2G3PHW"
 
         try:
             item['brand'] = response.selector.xpath('//*[@itemprop="brand"]/text()').extract()[0]

@@ -26,20 +26,20 @@ class LampsPlus(scrapy.Spider):
     is_test_run = True
     is_run = True
     start_urls = []
-if (is_run):
-    sitemap_index = "http://www.lampsplus.com/sitemap-index.xml"
-    sitemaps = []
-    sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
-    for st in sitemap_tags:
-        t = st.findNext("loc").text
-        if 'products/' in t:
-            sitemaps.append(t)
-    for sitemap in sitemaps:
-        tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
-        for tag in tags:
-            start_urls.append(tag.findNext("loc").text)
-        if is_test_run:
-            start_urls = start_urls[100:1000]
+    if (is_run):
+        sitemap_index = "http://www.lampsplus.com/sitemap-index.xml"
+        sitemaps = []
+        sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
+        for st in sitemap_tags:
+            t = st.findNext("loc").text
+            if 'products/' in t:
+                sitemaps.append(t)
+        for sitemap in sitemaps:
+            tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
+            for tag in tags:
+                start_urls.append(tag.findNext("loc").text)
+            if is_test_run:
+                start_urls = start_urls[100:1000]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
@@ -52,10 +52,9 @@ if (is_run):
         item['prod_id'] = str(str(datetime) + str(int(random.uniform(100000, 999999))))
         item['product_link'] = response.url
 
-        item['merchant'] = "Belk"
+        item['merchant'] = "Lamps Plus"
         item['merchant_prod_id'] = response.url.split("/")[-1].replace(".html", "")
-        #item['upc'] ##TODO
-        item['merchant_id'] = "IXR49N"
+        item['merchant_id'] = "P2B2J5"
 
         try:
             item['brand'] = response.selector.xpath('//*[@itemprop="brand"]/text()').extract()[0]

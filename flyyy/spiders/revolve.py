@@ -105,7 +105,7 @@ class Revolve(scrapy.Spider):
                 item[attr] = ""
         item['mcat_code'] = ""
         item['merchant'] = "REVOLVE"
-        item['merchant_id']  = "HE3T6E"
+        item['merchant_id']  = "35KQ17"
         item['merchant_prod_id'] = response.selector.xpath('//input[@id="productCode"]/@value').extract()[0]
         item['is_available'] = True
         item['currency'] = "USD"
