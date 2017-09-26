@@ -14,7 +14,7 @@ import numpy as np
 class Revolve(scrapy.Spider):
     name = "revolve"
     allowed_domains = ["revolve.com"]
-    is_test = True
+    is_test = False
     is_run = True
     start_urls = []
     sitemaps = []
@@ -132,7 +132,7 @@ class Revolve(scrapy.Spider):
         except IndexError:
             item['price_orig'] = int(float(response.selector.xpath('//meta[@itemprop="price"]/@content').extract()[0]))
             item['price'] = item['price_orig']
-            item['price_sale'] = ""
+            item['price_sale'] = item['price_orig']
             item['on_sale'] = False #BOOLEAN
             item['price_perc_discount'] = 0
         item['primary_color'] = ""
