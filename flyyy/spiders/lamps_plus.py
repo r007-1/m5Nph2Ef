@@ -24,7 +24,7 @@ class LampsPlus(scrapy.Spider):
     name = "lamps_plus"
     allowed_domains = ["lampsplus.com"]
     is_test_run = True
-    is_run = True
+    is_run = False
     start_urls = []
     if (is_run):
         sitemap_index = "http://www.lampsplus.com/sitemap-index.xml"

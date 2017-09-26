@@ -26,7 +26,7 @@ class Cymax(scrapy.Spider):
     name = "cymax"
     allowed_domains = ["cymax.com"]
     is_test_run = True
-    is_run = True
+    is_run = False
     start_urls = []
     if (is_run):
         sitemap_index = "https://www.cymax.com/sitemap.xml"

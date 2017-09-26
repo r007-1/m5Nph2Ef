@@ -1,5 +1,3 @@
-#https://www.cymax.com/sitemap.xml
-
 from bs4 import BeautifulSoup as bs
 from lxml import etree, html
 import requests
@@ -13,6 +11,9 @@ import csv
 import numpy
 import numpy as np
 #import js2xml, js2xml.jsonlike
+
+##TODO: Fix ld error: https://www.burkedecor.com/products/tim-walker-pictures-teneues
+
 
 def find_between(s, first, last):
     try:
@@ -65,16 +66,20 @@ class Burke(scrapy.Spider):
         except:
             item['brand'] = ""
         item['short_desc'] = response.selector.xpath('//*[@itemprop="name"]/@content').extract()[0]
-        ld = [response.selector.xpath('//p[@itemprop="description"]/following::p/text()').extract()[0]]
-        if ld==[u'\xa0']:
-            ld = []
-        ld2 = response.selector.xpath('//p[@itemprop="description"]/following::ul[1]//text()').extract()
-        ld2 = filter(lambda x: "%" in x or "Finish" in x, ld2)
-        ld.extend(ld2)
-        skipwords = ["clean", "instructions", "cm", "wash", "in.", "inch", "size", "mm ", "size", "Weight", "Dimensions"]
-        for w in skipwords:
-            ld = list(np.array(ld)[np.array([w not in x for x in ld])])
-        item['long_desc'] = " | ".join(ld).strip()
+        try:
+            ld = [response.selector.xpath('//p[@itemprop="description"]/following::p/text()').extract()[0]]
+            if ld==[u'\xa0']:
+                ld = []
+            ld2 = response.selector.xpath('//p[@itemprop="description"]/following::ul[1]//text()').extract()
+            ld2 = filter(lambda x: "%" in x or "Finish" in x, ld2)
+            ld.extend(ld2)
+            skipwords = ["clean", "instructions", "cm", "wash", "in.", "inch", "size", "mm ", "size", "Weight", "Dimensions"]
+            for w in skipwords:
+                ld = list(np.array(ld)[np.array([w not in x for x in ld])])
+            item['long_desc'] = " | ".join(ld).strip()
+        except:
+            # out of stock
+            pass
         item['primary_color'] = "" #later
         item['currency'] = response.selector.xpath('//meta[@itemprop="priceCurrency"]/@content').extract()[0]
         if (item['currency'] == 'USD'):
