@@ -43,6 +43,8 @@ class Belk(scrapy.Spider):
         if is_test_run:
             start_urls = start_urls[100:1000]
     start_urls = list(np.unique(start_urls))
+    start_urls = start_urls[70356:]
+    start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
         random.seed(1412112 + datetime)
