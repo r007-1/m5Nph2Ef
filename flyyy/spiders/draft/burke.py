@@ -1,3 +1,5 @@
+#https://www.cymax.com/sitemap.xml
+
 from bs4 import BeautifulSoup as bs
 from lxml import etree, html
 import requests
@@ -20,104 +22,99 @@ def find_between(s, first, last):
     except ValueError:
         return ""
 
-class LampsPlus(scrapy.Spider):
-    name = "lamps_plus"
-    allowed_domains = ["lampsplus.com"]
+class Burke(scrapy.Spider):
+    name = "burke"
+    allowed_domains = ["burkedecor.com"]
     is_test_run = True
     is_run = True
     start_urls = []
     if (is_run):
-        sitemap_index = "http://www.lampsplus.com/sitemap-index.xml"
+        sitemap_index = "https://www.burkedecor.com/sitemap.xml"
         sitemaps = []
         sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
         for st in sitemap_tags:
             t = st.findNext("loc").text
-            if 'products/' in t:
+            if 'products' in t:
                 sitemaps.append(t)
         for sitemap in sitemaps:
             tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
             for tag in tags:
-                start_urls.append(tag.findNext("loc").text)
-            if is_test_run:
-                start_urls = start_urls[100:1000]
+                url = tag.findNext("loc").text
+                if '/products/' in url:
+                    start_urls.append(url)
+        if (is_test_run):
+            start_urls = start_urls[100:200]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
         random.seed(1412112 + datetime)
-
         item = NuyolkItem()
         item['is_available'] = True
         item['affiliate_partner'] = "viglink"
-
         item['prod_id'] = str(str(datetime) + str(int(random.uniform(100000, 999999))))
         item['product_link'] = response.url
-
-        item['merchant'] = "Lamps Plus"
-        item['merchant_prod_id'] = response.url.split("/")[-1].replace(".html", "")
-        item['merchant_id'] = "P2B2J5"
-
+        item['merchant'] = "Burke Decor"
         try:
-            item['brand'] = response.selector.xpath('//*[@itemprop="brand"]/text()').extract()[0]
+            item['merchant_prod_id'] = response.selector.xpath('//*[@class="product-status"]/text()').extract()[0].replace("SKU: ", "").strip()
+        except:
+            pass
+        #item['upc'] ##TODO
+        item['merchant_id'] = "A82I78"
+        try:
+            item['brand'] = response.selector.xpath('//*[@class="product_meta"]//a/text()').extract()[0]
         except:
             item['brand'] = ""
-        item['short_desc'] = response.selector.xpath('//*[@class="brand-name"]/text()').extract()[0].strip()
-        ld = response.selector.xpath('//meta[@name="description"]/@content').extract()
-        ld.extend(response.selector.xpath('//ul[@class="copyline"]/li/text()').extract())
-        skipwords = ["clean", "instructions", "cm", "wash", "in.", "inch", "size", "mm ", "size"]
+        item['short_desc'] = response.selector.xpath('//*[@itemprop="name"]/@content').extract()[0]
+        ld = [response.selector.xpath('//p[@itemprop="description"]/following::p/text()').extract()[0]]
+        if ld==[u'\xa0']:
+            ld = []
+        ld2 = response.selector.xpath('//p[@itemprop="description"]/following::ul[1]//text()').extract()
+        ld2 = filter(lambda x: "%" in x or "Finish" in x, ld2)
+        ld.extend(ld2)
+        skipwords = ["clean", "instructions", "cm", "wash", "in.", "inch", "size", "mm ", "size", "Weight", "Dimensions"]
         for w in skipwords:
             ld = list(np.array(ld)[np.array([w not in x for x in ld])])
         item['long_desc'] = " | ".join(ld).strip()
         item['primary_color'] = "" #later
-
         item['currency'] = response.selector.xpath('//meta[@itemprop="priceCurrency"]/@content').extract()[0]
         if (item['currency'] == 'USD'):
             item['currency_symbol'] = '$'
         else:
             item['currency_symbol'] = '?' ##TODO
-
         #If item is on sale,
         #[4:].replace(",", "")
         try:
-            item['price_sale'] = int(float(response.selector.xpath("//*[@class='price-sales']/span/text()").extract()[0].replace(",", "")))
-            item['price_orig'] = int(float(response.selector.xpath("//*[@class='price-standard']/text()").extract()[0].replace("Orig. $", "").replace(",", "")))
+            item['price_sale'] = int(float(response.selector.xpath('//*[@id="ProductPrice"]/text()').extract()[0].strip()[1:]))
+            item['price_orig'] = int(float(response.selector.xpath('//*[@id="ComparePrice"]/text()').extract()[0].strip()[1:].replace(",","")))
             item['price_perc_discount'] = int((1 - float(item['price_sale'])/float(item['price_orig']))*100)
             item['price'] = item['price_sale']
             item['on_sale'] = True
         except:
-            try:
-                item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/input/@value").extract()[0].replace(",", "")))
-            except:
-                try:
-                    item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/span/text()").extract()[0].replace(",", "")))
-                except:
-                    print("??? SKIPPED!")
-                    return
+            item['price_orig'] = int(float(response.selector.xpath('//*[@id="ProductPrice"]/text()').extract()[0].strip()[1:].replace(",","")))
             item['price'] = item['price_orig']
             item['price_sale'] = item['price_orig']
             item['price_perc_discount'] = 0
             item['on_sale'] = False
-
-        item['image_urls'] = response.selector.xpath('//div[@class="product-thumbnails"]//li/a/@href').extract()
+        item['image_urls'] = response.selector.xpath('//*[@class="product-media"]//img//@src').extract()
+        item['image_urls'] = ['http:' + x.split('?v=', 1)[0] for x in item['image_urls']]
         #response.selector.xpath('//*[@class="zoom masterTooltip"]/img/@src').extract() #new
         item['img_1'] = ""
         item['img_2'] = ""
         item['img_3'] = ""
         item['img_4'] = ""
         item['img_5'] = ""
-
         for i in range(0,6):
             attr = 'imglink_' + str(i+1)
             try:
                 item[attr] = item['image_urls'][i]
             except:
                 item[attr] = ""
-
-        mcats = response.xpath('//script[contains(., "var utag_data")]/text()').re('product_category\"\: \[([^]]+)\]')[0].strip().replace('"', "")
+        mcats = response.xpath('//script[contains(., "fbq(")]/text()').re('content_category\: \'([^]]+)')
+        mcats = mcats[0].split(",")[0]
         mcats = mcats.split(" > ")
-
+        mcats = filter(lambda x: "All" not in x and "New" not in x and "$" not in x and item['brand'] not in x and "Sale" not in x, mcats)
         item['mcat_code'] = ""
         item['image_urls'] = ""
-
         for i in range(0, 5):
             attr = 'mcat_' + str(i + 1)
             try:
@@ -127,16 +124,12 @@ class LampsPlus(scrapy.Spider):
                     item[attr] = mcats[i]
             except:
                 item[attr] = ""
-
         item['cat_code'] = ""
         item['cat_1'] = "" #deprecate
         item['cat_2'] = "" #deprecate
         item['cat_3'] = "" #deprecate
-
         t = [item['brand'], item['short_desc'], item['mcat_1'], mcats[1:], item['long_desc']]
         item['tags'] = " ".join(list(numpy.hstack(t)))
-
         item['date_added'] = str(time.strftime("%d/%m/%Y %H:%M:%S"))
         item['date_last_updated'] = str(time.strftime("%d/%m/%Y %H:%M:%S"))
-
         yield item

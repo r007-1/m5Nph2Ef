@@ -20,28 +20,26 @@ def find_between(s, first, last):
     except ValueError:
         return ""
 
-class Belk(scrapy.Spider):
-    name = "belk"
-    allowed_domains = ["belk.com"]
-    is_test_run = False
-    is_run = False
+class LampsPlus(scrapy.Spider):
+    name = "lamps_plus"
+    allowed_domains = ["lampsplus.com"]
+    is_test_run = True
+    is_run = True
     start_urls = []
     if (is_run):
-        sitemap_index = "http://www.belk.com/sitemap_index.xml"
+        sitemap_index = "http://www.lampsplus.com/sitemap-index.xml"
         sitemaps = []
         sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
         for st in sitemap_tags:
             t = st.findNext("loc").text
-            if 'product' in t:
+            if 'products/' in t:
                 sitemaps.append(t)
-        if is_test_run:
-            sitemaps = [sitemaps[0]]
         for sitemap in sitemaps:
             tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
             for tag in tags:
                 start_urls.append(tag.findNext("loc").text)
-        if is_test_run:
-            start_urls = start_urls[100:1000]
+            if is_test_run:
+                start_urls = start_urls[10000:10100]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
@@ -54,19 +52,25 @@ class Belk(scrapy.Spider):
         item['prod_id'] = str(str(datetime) + str(int(random.uniform(100000, 999999))))
         item['product_link'] = response.url
 
-        item['merchant'] = "Belk"
-        item['merchant_prod_id'] = response.url.split("/")[-1].replace(".html", "")
-        #item['upc'] ##TODO
-        item['merchant_id'] = "IXR49N"
+        item['merchant'] = "Lamps Plus"
+        try:
+            item['merchant_prod_id'] = response.selector.xpath('//*[@id="pdProdSku"]/text()').extract()[0].replace('- Style # ', '')
+        except:
+            pass
+        item['merchant_id'] = "P2B2J5"
 
         try:
-            item['brand'] = response.selector.xpath('//*[@itemprop="brand"]/text()').extract()[0]
+            item['brand'] = response.selector.xpath('//*[@id="pnlBrand"]/@content').extract()[0]
         except:
             item['brand'] = ""
-        item['short_desc'] = response.selector.xpath('//*[@class="brand-name"]/text()').extract()[0].strip()
-        ld = response.selector.xpath('//meta[@name="description"]/@content').extract()
-        ld.extend(response.selector.xpath('//ul[@class="copyline"]/li/text()').extract())
-        skipwords = ["clean", "instructions", "cm", "wash", "in.", "inch", "size", "mm ", "size"]
+        item['short_desc'] = response.selector.xpath('//*[@id="h1ProductName"]/text()').extract()[0].strip()
+
+        ld = [response.selector.xpath('//*[@id="pdKeySentence"]/text()').extract()[0].strip()]
+        ld2 = [response.selector.xpath('//p[@itemprop="description"]/text()').extract()[0].strip()]
+        ld3 = response.selector.xpath('//*[@id="pdDescBullets"]/li/text()').extract()
+        ld.extend(ld2)
+        ld.extend(ld3)
+        skipwords = ["clean", "instructions", "cm", "\" ", "wash", "in.", "inch", "size", "mm ", "size", "weighs", "lbs."]
         for w in skipwords:
             ld = list(np.array(ld)[np.array([w not in x for x in ld])])
         item['long_desc'] = " | ".join(ld).strip()
@@ -81,26 +85,20 @@ class Belk(scrapy.Spider):
         #If item is on sale,
         #[4:].replace(",", "")
         try:
-            item['price_sale'] = int(float(response.selector.xpath("//*[@class='price-sales']/span/text()").extract()[0].replace(",", "")))
-            item['price_orig'] = int(float(response.selector.xpath("//*[@class='price-standard']/text()").extract()[0].replace("Orig. $", "").replace(",", "")))
+            item['price_sale'] = int(float(response.selector.xpath("//*[@itemprop='lowPrice']/@content").extract()[0].replace(",", "")))
+            item['price_orig'] = int(float(response.selector.xpath("//*[@itemprop='highPrice']/@content").extract()[0].replace(",", "")))
             item['price_perc_discount'] = int((1 - float(item['price_sale'])/float(item['price_orig']))*100)
             item['price'] = item['price_sale']
             item['on_sale'] = True
         except:
-            try:
-                item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/input/@value").extract()[0].replace(",", "")))
-            except:
-                try:
-                    item['price_orig'] = int(float(response.selector.xpath("//*[@class='standardprice']/span/text()").extract()[0].replace(",", "")))
-                except:
-                    print("??? SKIPPED!")
-                    return
+            item['price_orig'] = int(float(response.selector.xpath("//*[@itemprop='price']/@content").extract()[0].replace(",", "")))
             item['price'] = item['price_orig']
             item['price_sale'] = item['price_orig']
             item['price_perc_discount'] = 0
             item['on_sale'] = False
 
-        item['image_urls'] = response.selector.xpath('//div[@class="product-thumbnails"]//li/a/@href').extract()
+        imgs = response.selector.xpath('//*[@id="pdAddlImgs"]//img/@src').extract()
+        item['image_urls'] = [x.replace(find_between(x, 'fpx?', 'fmt=jpeg'), "") for x in imgs]
         #response.selector.xpath('//*[@class="zoom masterTooltip"]/img/@src').extract() #new
         item['img_1'] = ""
         item['img_2'] = ""
@@ -115,8 +113,10 @@ class Belk(scrapy.Spider):
             except:
                 item[attr] = ""
 
-        mcats = response.xpath('//script[contains(., "var utag_data")]/text()').re('product_category\"\: \[([^]]+)\]')[0].strip().replace('"', "")
-        mcats = mcats.split(" > ")
+        mcats = response.selector.xpath('//*[@id="divBreadCrumb"]//text()').extract()
+        mcats = [x.strip() for x in mcats]
+        mcats = filter(lambda x: x != "" and x != "|", mcats)
+        mcats = mcats[1:-2]
 
         item['mcat_code'] = ""
         item['image_urls'] = ""

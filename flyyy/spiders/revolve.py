@@ -15,7 +15,7 @@ class Revolve(scrapy.Spider):
     name = "revolve"
     allowed_domains = ["revolve.com"]
     is_test = False
-    is_run = True
+    is_run = False
     start_urls = []
     sitemaps = []
     if (is_run):
@@ -38,7 +38,10 @@ class Revolve(scrapy.Spider):
         item = NuyolkItem() #Don't change!
         item['prod_id'] = str(datetime) + str(int(random.uniform(100000, 999999))) #Don't change!
         item['affiliate_partner'] = "viglink"
-        item['brand'] = response.selector.xpath('//meta[@name="twitter:data2"]/@content').extract()[0]
+        try:
+            item['brand'] = response.selector.xpath('//meta[@name="twitter:data2"]/@content').extract()[0]
+        except:
+            pass
         ld = response.selector.xpath('//div[@class="product-details__content js-tabs__content js-tabs__content-active product-details__description"]/ul/li/text()').extract()
         if (len(ld)>=7):
             ld = ld[:7]
@@ -108,7 +111,6 @@ class Revolve(scrapy.Spider):
         item['merchant_id']  = "35KQ17"
         item['merchant_prod_id'] = response.selector.xpath('//input[@id="productCode"]/@value').extract()[0]
         item['is_available'] = True
-        item['currency'] = "USD"
         item['currency'] = response.selector.xpath('//meta[@property="wanelo:product:price:currency"]/@content').extract()[0]
         if (item['currency'] == 'USD'):
             item['currency_symbol'] = '$'
