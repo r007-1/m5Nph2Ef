@@ -52,7 +52,10 @@ class Cymax(scrapy.Spider):
         item['prod_id'] = str(str(datetime) + str(int(random.uniform(100000, 999999))))
         item['product_link'] = response.url
         item['merchant'] = "Cymax"
-        item['merchant_prod_id'] = response.selector.xpath('//*[@id="product-codes-area"]//span/text()').extract()[0].replace("Item: ", "")
+        try:
+            item['merchant_prod_id'] = response.selector.xpath('//*[@id="product-codes-area"]//span/text()').extract()[0].replace("Item: ", "")
+        except:
+            pass
         #item['upc'] ##TODO
         item['merchant_id'] = "2G3PHW"
         try:
