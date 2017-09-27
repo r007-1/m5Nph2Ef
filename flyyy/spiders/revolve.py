@@ -14,8 +14,8 @@ import numpy as np
 class Revolve(scrapy.Spider):
     name = "revolve"
     allowed_domains = ["revolve.com"]
-    is_test = False
-    is_run = False
+    is_test = True
+    is_run = True
     start_urls = []
     sitemaps = []
     if (is_run):
@@ -30,7 +30,7 @@ class Revolve(scrapy.Spider):
                 if 'dp' in prod_link:
                     start_urls.append(prod_link)
         if (is_test):
-            start_urls = start_urls[50:60]
+            start_urls = start_urls[1300:1400]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100))) #Don't change!

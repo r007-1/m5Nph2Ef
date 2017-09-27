@@ -17,8 +17,8 @@ from post_processing.category import generate_cat
 import os
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
-import pymongo
 from pymongo import MongoClient
+import pymongo
 
 
 ###### TODO: Figure out file format for each step

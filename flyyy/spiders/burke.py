@@ -24,7 +24,7 @@ def find_between(s, first, last):
 class Burke(scrapy.Spider):
     name = "burke"
     allowed_domains = ["burkedecor.com"]
-    is_test_run = True
+    is_test_run = False
     is_run = True
     start_urls = []
     if (is_run):
