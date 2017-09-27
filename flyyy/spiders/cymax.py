@@ -25,7 +25,7 @@ def find_between(s, first, last):
 class Cymax(scrapy.Spider):
     name = "cymax"
     allowed_domains = ["cymax.com"]
-    is_test_run = True
+    is_test_run = False
     is_run = True
     start_urls = []
     cat_urls = []
