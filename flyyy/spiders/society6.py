@@ -26,7 +26,7 @@ class Society6(scrapy.Spider):
     name = "society6"
     allowed_domains = ["society6.com"]
     is_test_run = True
-    is_run = True
+    is_run = False
     try:
         mt = os.path.getmtime("cache/society6_urls.csv")
         tn = time.time()
@@ -97,7 +97,10 @@ class Society6(scrapy.Spider):
         sd = response.selector.xpath('//title/text()').extract()[0]
         sd = sd.split(" by ")[0].capitalize()
         item['short_desc'] = sd
-        ld = [response.selector.xpath('//*[@id="about-the-art-description"]/text()').extract()[0].strip()]
+        try:
+            ld = [response.selector.xpath('//*[@id="about-the-art-description"]/text()').extract()[0].strip()]
+        except:
+            ld = []
         ld2 = response.selector.xpath('//*[@id="product-description"]//text()').extract()[0].strip().split(". ")
         ld2last = ld2[-1]
         ld2 = [x + "." for x in ld2[:-1]]

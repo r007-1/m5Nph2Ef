@@ -21,7 +21,7 @@ class Revolve(scrapy.Spider):
     name = "revolve"
     allowed_domains = ["revolve.com"]
     is_test = False
-    is_run = True
+    is_run = False
     start_urls = []
     sitemaps = []
     if (is_run):

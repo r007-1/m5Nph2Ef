@@ -46,9 +46,9 @@ class LampsPlus(scrapy.Spider):
                 vp = "usage_" in url or "manufacturer_" in url or "finish_" in url or "color_" in url or "style_" in url or "type_" in url
                 if (not vp):
                     start_urls.append(url)
-        if is_test_run:
-            start_urls = start_urls[1000:1100]
     start_urls = list(np.unique(start_urls))
+    if is_test_run:
+        start_urls = start_urls[1000:1100]
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
         random.seed(1412112 + datetime)
