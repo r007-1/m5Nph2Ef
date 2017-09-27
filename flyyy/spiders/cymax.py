@@ -28,6 +28,7 @@ class Cymax(scrapy.Spider):
     is_test_run = True
     is_run = True
     start_urls = []
+    cat_urls = []
     if (is_run):
         sitemap_index = "https://www.cymax.com/sitemap.xml"
         sitemaps = []
@@ -39,11 +40,16 @@ class Cymax(scrapy.Spider):
             tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
             for tag in tags:
                 url = tag.findNext("loc").text
-                start_urls.append(url)
+                if '--C' in url:
+                    cat_urls.append(url)
+                else:
+                    start_urls.append(url)
         if is_test_run:
-            start_urls = start_urls[1000:1100]
-        start_urls = list(np.unique(start_urls))
+            start_urls = start_urls[-100:]
+    start_urls = list(np.unique(start_urls))
     def parse(self, response):
+        if response.url == 'https://www.cymax.com/':
+            pass
         datetime = int(str(int(time.time()*100)))
         random.seed(1412112 + datetime)
         item = NuyolkItem()
@@ -84,7 +90,10 @@ class Cymax(scrapy.Spider):
             item['price'] = item['price_sale']
             item['on_sale'] = True
         except:
-            item['price_orig'] = int(float(response.selector.xpath('//input[@name="Main.Price"]/@value').extract()[0]))
+            try:
+                item['price_orig'] = int(float(response.selector.xpath('//input[@name="Main.Price"]/@value').extract()[0]))
+            except:
+                item['price_orig'] = int(float(response.selector.xpath('//meta[@property="og:price:amount"]/@content').extract()[0]))
             item['price'] = item['price_orig']
             item['price_sale'] = item['price_orig']
             item['price_perc_discount'] = 0

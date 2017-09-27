@@ -20,26 +20,36 @@ def find_between(s, first, last):
     except ValueError:
         return ""
 
-class LampsPlus(scrapy.Spider):
-    name = "lamps_plus"
-    allowed_domains = ["lampsplus.com"]
-    is_test_run = False
+class Society6(scrapy.Spider):
+    name = "society6"
+    allowed_domains = ["society6.com"]
+    is_test_run = True
     is_run = True
+    read_from_cache = True
     start_urls = []
     if (is_run):
-        sitemap_index = "http://www.lampsplus.com/sitemap-index.xml"
+        if (read_from_cache):
+            f = open('cache/society6_links.csv')
+            start_urls = f.readlines()
+        sitemap_index = "https://society6.com/sitemap/index.xml"
         sitemaps = []
         sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
         for st in sitemap_tags:
             t = st.findNext("loc").text
-            if 'products/' in t:
+            if '/product/' in t:
                 sitemaps.append(t)
         for sitemap in sitemaps:
+            print(sitemap)
             tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
             for tag in tags:
-                start_urls.append(tag.findNext("loc").text)
+                url = tag.findNext("loc").text
+                if '/product/' in url:
+                    start_urls.append(url)
+            print(len(start_urls))
         if is_test_run:
             start_urls = start_urls[10000:10100]
+    if (len(start_urls) > 250000):
+        csv.writer(start_urls)
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
@@ -57,7 +67,7 @@ class LampsPlus(scrapy.Spider):
             item['merchant_prod_id'] = response.selector.xpath('//*[@id="pdProdSku"]/text()').extract()[0].replace('- Style # ', '')
         except:
             pass
-        item['merchant_id'] = "P2B2J5"
+        item['merchant_id'] = "7599C0"
 
         try:
             item['brand'] = response.selector.xpath('//*[@id="pnlBrand"]/@content').extract()[0]
