@@ -132,7 +132,10 @@ class Revolve(scrapy.Spider):
                 item['price_perc_discount'] = 0
                 item['on_sale'] = False
         except IndexError:
-            item['price_orig'] = int(float(response.selector.xpath('//meta[@itemprop="price"]/@content').extract()[0]))
+            try:
+                item['price_orig'] = int(float(response.selector.xpath('//meta[@itemprop="price"]/@content').extract()[0]))
+            except:
+                pass
             item['price'] = item['price_orig']
             item['price_sale'] = item['price_orig']
             item['on_sale'] = False #BOOLEAN

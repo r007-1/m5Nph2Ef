@@ -62,19 +62,24 @@ class Society6(scrapy.Spider):
         item['prod_id'] = str(str(datetime) + str(int(random.uniform(100000, 999999))))
         item['product_link'] = response.url
 
-        item['merchant'] = "Lamps Plus"
+        item['merchant'] = "Society6"
         try:
-            item['merchant_prod_id'] = response.selector.xpath('//*[@id="pdProdSku"]/text()').extract()[0].replace('- Style # ', '')
+            mpi = response.xpath('//script[contains(., "dataLayer = ")]/text()').re('\"id\"\:\"(.*)')[0]
+            mpi = mpi.split("\"")[0]
+            item['merchant_prod_id'] = mpi
         except:
             pass
         item['merchant_id'] = "7599C0"
 
         try:
-            item['brand'] = response.selector.xpath('//*[@id="pnlBrand"]/@content').extract()[0]
+            brand = response.selector.xpath('//*[@class="user-avatar"]/a/img/@alt').extract()[0]
+            brand = brand.split(" (")[0].strip()
+            item['brand'] = brand
         except:
             item['brand'] = ""
-        item['short_desc'] = response.selector.xpath('//*[@id="h1ProductName"]/text()').extract()[0].strip()
-
+        sd = response.selector.xpath('//title/text()').extract()[0]
+        sd = sd.split(" by ")[0].to
+        item['short_desc'] = sd
         ld = [response.selector.xpath('//*[@id="pdKeySentence"]/text()').extract()[0].strip()]
         ld2 = [response.selector.xpath('//p[@itemprop="description"]/text()').extract()[0].strip()]
         ld3 = response.selector.xpath('//*[@id="pdDescBullets"]/li/text()').extract()
