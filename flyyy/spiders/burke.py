@@ -8,6 +8,7 @@ import datetime
 import random
 import math
 import csv
+import uuid
 import numpy
 import numpy as np
 #import js2xml, js2xml.jsonlike
@@ -30,13 +31,13 @@ class Burke(scrapy.Spider):
     if (is_run):
         sitemap_index = "https://www.burkedecor.com/sitemap.xml"
         sitemaps = []
-        sitemap_tags = bs(requests.get(sitemap_index).text, "lxml").find_all("sitemap")
+        sitemap_tags = bs(requests.get(sitemap_index).text, "lxml", headers = {'User-agent': uuid.uuid4().hex}).find_all("sitemap")
         for st in sitemap_tags:
             t = st.findNext("loc").text
             if 'products' in t:
                 sitemaps.append(t)
         for sitemap in sitemaps:
-            tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
+            tags = bs(requests.get(sitemap).text, "lxml", headers = {'User-agent': uuid.uuid4().hex}).find_all("url")
             for tag in tags:
                 url = tag.findNext("loc").text
                 if '/products/' in url:
@@ -74,10 +75,9 @@ class Burke(scrapy.Spider):
             skipwords = ["clean", "instructions", "cm", "wash", "in.", "inch", "size", "mm ", "size", "Weight", "Dimensions"]
             for w in skipwords:
                 ld = list(np.array(ld)[np.array([w not in x for x in ld])])
-            item['long_desc'] = " | ".join(ld).strip()
+                item['long_desc'] = " | ".join(ld).strip()
         except:
-            # out of stock
-            return
+            return ##OOS
         item['primary_color'] = "" #later
         item['currency'] = response.selector.xpath('//meta[@itemprop="priceCurrency"]/@content').extract()[0]
         if (item['currency'] == 'USD'):
@@ -115,7 +115,7 @@ class Burke(scrapy.Spider):
         mcats = response.xpath('//script[contains(., "fbq(")]/text()').re('content_category\: \'([^]]+)')
         mcats = mcats[0].split(",")[0]
         mcats = mcats.split(" > ")
-        mcats = filter(lambda x: "All" not in x and "New" not in x and "$" not in x and item['brand'] not in x and "Sale" not in x, mcats)
+        mcats = filter(lambda x: "All" not in x and "New" not in x and "$" not in x and item['brand'] not in x and "Sale" not in x and "Shop" not in x, mcats)
         item['mcat_code'] = ""
         item['image_urls'] = ""
         for i in range(0, 5):
