@@ -25,7 +25,7 @@ class Burke(scrapy.Spider):
     name = "burke"
     allowed_domains = ["burkedecor.com"]
     is_test_run = False
-    is_run = True
+    is_run = False
     start_urls = []
     if (is_run):
         sitemap_index = "https://www.burkedecor.com/sitemap.xml"
