@@ -19,7 +19,12 @@ def find_between(s, first, last):
         return s[start:end]
     except ValueError:
         return ""
-
+        ##TODO remove manufacturer links http://www.lampsplus.com/products/bathroom-lighting/finish_chrome/color_gray/manufacturer_hinkley/
+        #http://www.lampsplus.com/products/cabinets-and-storage/finish_pecan/usage_living-@-family-room/type_bookshelves/
+        #http://www.lampsplus.com/products/cabinets-and-storage/finish_pecan/usage_office/
+        #http://www.lampsplus.com/products/cabinets-and-storage/style_mid@century/finish_chrome/color_white-@-ivory/
+        #http: // www.lampsplus.com / products / cabinets - and -storage/style_rustic-@-lodge / usage_office / type_bookshelves /
+        #http://www.lampsplus.com/products/cabinets-and-storage/style_traditional/finish_cherry/manufacturer_howard-miller/
 class LampsPlus(scrapy.Spider):
     name = "lamps_plus"
     allowed_domains = ["lampsplus.com"]
@@ -37,9 +42,12 @@ class LampsPlus(scrapy.Spider):
         for sitemap in sitemaps:
             tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
             for tag in tags:
-                start_urls.append(tag.findNext("loc").text)
+                url = tag.findNext("loc").text
+                vp = "usage_" in url or "manufacturer_" in url or "finish_" in url or "color_" in url or "style_" in url or "type_" in url
+                if (vp):
+                    start_urls.append(url)
         if is_test_run:
-            start_urls = start_urls[10000:10100]
+            start_urls = start_urls[1000:1100]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         datetime = int(str(int(time.time()*100)))
