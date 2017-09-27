@@ -31,13 +31,13 @@ class Burke(scrapy.Spider):
     if (is_run):
         sitemap_index = "https://www.burkedecor.com/sitemap.xml"
         sitemaps = []
-        sitemap_tags = bs(requests.get(sitemap_index).text, "lxml", headers = {'User-agent': uuid.uuid4().hex}).find_all("sitemap")
+        sitemap_tags = bs(requests.get(sitemap_index, headers = {'User-agent': uuid.uuid4().hex}).text, "lxml").find_all("sitemap")
         for st in sitemap_tags:
             t = st.findNext("loc").text
             if 'products' in t:
                 sitemaps.append(t)
         for sitemap in sitemaps:
-            tags = bs(requests.get(sitemap).text, "lxml", headers = {'User-agent': uuid.uuid4().hex}).find_all("url")
+            tags = bs(requests.get(sitemap, headers = {'User-agent': uuid.uuid4().hex}).text, "lxml").find_all("url")
             for tag in tags:
                 url = tag.findNext("loc").text
                 if '/products/' in url:
