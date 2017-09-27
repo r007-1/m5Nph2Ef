@@ -56,14 +56,18 @@ class LampsPlus(scrapy.Spider):
         try:
             item['merchant_prod_id'] = response.selector.xpath('//*[@id="pdProdSku"]/text()').extract()[0].replace('- Style # ', '')
         except:
-            pass
+            return
         item['merchant_id'] = "P2B2J5"
 
         try:
             item['brand'] = response.selector.xpath('//*[@id="pnlBrand"]/@content').extract()[0]
         except:
             item['brand'] = ""
-        item['short_desc'] = response.selector.xpath('//*[@id="h1ProductName"]/text()').extract()[0].strip()
+
+        try:
+            item['short_desc'] = response.selector.xpath('//*[@id="h1ProductName"]/text()').extract()[0].strip()
+        except:
+            return
 
         ld = [response.selector.xpath('//*[@id="pdKeySentence"]/text()').extract()[0].strip()]
         ld2 = [response.selector.xpath('//p[@itemprop="description"]/text()').extract()[0].strip()]

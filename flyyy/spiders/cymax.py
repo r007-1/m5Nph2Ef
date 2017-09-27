@@ -49,7 +49,7 @@ class Cymax(scrapy.Spider):
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
         if response.url == 'https://www.cymax.com/':
-            pass
+            return
         datetime = int(str(int(time.time()*100)))
         random.seed(1412112 + datetime)
         item = NuyolkItem()
@@ -61,7 +61,7 @@ class Cymax(scrapy.Spider):
         try:
             item['merchant_prod_id'] = response.selector.xpath('//*[@id="product-codes-area"]//span/text()').extract()[0].replace("Item: ", "")
         except:
-            pass
+            return
         #item['upc'] ##TODO
         item['merchant_id'] = "2G3PHW"
         try:

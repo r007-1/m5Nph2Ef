@@ -56,7 +56,7 @@ class Burke(scrapy.Spider):
         try:
             item['merchant_prod_id'] = response.selector.xpath('//*[@class="product-status"]/text()').extract()[0].replace("SKU: ", "").strip()
         except:
-            pass
+            return
         #item['upc'] ##TODO
         item['merchant_id'] = "A82I78"
         try:
@@ -77,7 +77,7 @@ class Burke(scrapy.Spider):
             item['long_desc'] = " | ".join(ld).strip()
         except:
             # out of stock
-            pass
+            return
         item['primary_color'] = "" #later
         item['currency'] = response.selector.xpath('//meta[@itemprop="priceCurrency"]/@content').extract()[0]
         if (item['currency'] == 'USD'):

@@ -14,7 +14,7 @@ import numpy as np
 class Revolve(scrapy.Spider):
     name = "revolve"
     allowed_domains = ["revolve.com"]
-    is_test = True
+    is_test = False
     is_run = True
     start_urls = []
     sitemaps = []
@@ -41,7 +41,7 @@ class Revolve(scrapy.Spider):
         try:
             item['brand'] = response.selector.xpath('//meta[@name="twitter:data2"]/@content').extract()[0]
         except:
-            pass
+            return
         ld = response.selector.xpath('//div[@class="product-details__content js-tabs__content js-tabs__content-active product-details__description"]/ul/li/text()').extract()
         if (len(ld)>=7):
             ld = ld[:7]
@@ -135,7 +135,7 @@ class Revolve(scrapy.Spider):
             try:
                 item['price_orig'] = int(float(response.selector.xpath('//meta[@itemprop="price"]/@content').extract()[0]))
             except:
-                pass
+                return
             item['price'] = item['price_orig']
             item['price_sale'] = item['price_orig']
             item['on_sale'] = False #BOOLEAN

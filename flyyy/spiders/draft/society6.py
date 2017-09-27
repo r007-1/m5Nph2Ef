@@ -7,6 +7,7 @@ import time
 import datetime
 import random
 import math
+import string
 import csv
 import numpy
 import numpy as np
@@ -78,13 +79,14 @@ class Society6(scrapy.Spider):
         except:
             item['brand'] = ""
         sd = response.selector.xpath('//title/text()').extract()[0]
-        sd = sd.split(" by ")[0].to
+        sd = sd.split(" by ")[0].capitalize()
         item['short_desc'] = sd
-        ld = [response.selector.xpath('//*[@id="pdKeySentence"]/text()').extract()[0].strip()]
-        ld2 = [response.selector.xpath('//p[@itemprop="description"]/text()').extract()[0].strip()]
-        ld3 = response.selector.xpath('//*[@id="pdDescBullets"]/li/text()').extract()
+        ld = [response.selector.xpath('//*[@id="about-the-art-description"]/text()').extract()[0].strip()]
+        ld2 = response.selector.xpath('//*[@id="product-description"]//text()').extract()[0].strip().split(". ")
+        ld2last = ld2[-1]
+        ld2 = [x + "." for x in ld2[:-1]]
+        ld2.append(ld2last)
         ld.extend(ld2)
-        ld.extend(ld3)
         skipwords = ["clean", "instructions", "cm", "\" ", "wash", "in.", "inch", "size", "mm ", "size", "weighs", "lbs."]
         for w in skipwords:
             ld = list(np.array(ld)[np.array([w not in x for x in ld])])
