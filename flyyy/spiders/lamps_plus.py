@@ -44,7 +44,7 @@ class LampsPlus(scrapy.Spider):
             for tag in tags:
                 url = tag.findNext("loc").text
                 vp = "usage_" in url or "manufacturer_" in url or "finish_" in url or "color_" in url or "style_" in url or "type_" in url
-                if (vp):
+                if (not vp):
                     start_urls.append(url)
         if is_test_run:
             start_urls = start_urls[1000:1100]

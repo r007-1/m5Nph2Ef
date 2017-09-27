@@ -11,6 +11,12 @@ import csv
 import numpy
 import numpy as np
 
+
+
+##TODO fix redirect error
+#2017-09-27 13:55:40 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (302) to <GET http://www.revolveclothing.com.au/r/DisplayProduct.jsp?aliasURL=indah-tahani-dress-in-guava/dp/INDA-WD510&product=INDA-WD510> from <GET http://www.revolve.com/indah-tahani-dress-in-guava/dp/INDA-WD510/>
+#2017-09-27 13:55:40 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (302) to <GET http://www.revolveclothing.com.au/r/DisplayProduct.jsp?aliasURL=indah-studded-maxi-dress-in-black/dp/INDA-WD527&product=INDA-WD527> from <GET http://www.revolve.com/indah-studded-maxi-dress-in-black/dp/INDA-WD527/>
+#2017-09-27 13:55:40 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (302) to <GET http://www.revolveclothing.com.au/r/DisplayProduct.jsp?aliasURL=indah-tahani-dress-in-pastel-panther/dp/INDA-WD555&product=INDA-WD555> from <GET http://www.revolve.com/indah-tahani-dress-in-pastel-panther/dp/INDA-WD555/>
 class Revolve(scrapy.Spider):
     name = "revolve"
     allowed_domains = ["revolve.com"]
