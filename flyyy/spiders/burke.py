@@ -7,6 +7,7 @@ import time
 import datetime
 import random
 import math
+import time
 import csv
 import uuid
 import numpy
@@ -37,6 +38,7 @@ class Burke(scrapy.Spider):
             if 'products' in t:
                 sitemaps.append(t)
         for sitemap in sitemaps:
+            time.sleep(1.5)
             tags = bs(requests.get(sitemap, headers = {'User-agent': uuid.uuid4().hex}).text, "lxml").find_all("url")
             for tag in tags:
                 url = tag.findNext("loc").text
@@ -46,6 +48,7 @@ class Burke(scrapy.Spider):
             start_urls = start_urls[100:200]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
+        time.sleep(0.5)
         datetime = int(str(int(time.time()*100)))
         random.seed(1412112 + datetime)
         item = NuyolkItem()

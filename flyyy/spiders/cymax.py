@@ -37,6 +37,7 @@ class Cymax(scrapy.Spider):
             t = st.findNext("loc").text
             sitemaps.append(t)
         for sitemap in sitemaps:
+            time.sleep(1.5)
             tags = bs(requests.get(sitemap).text, "lxml").find_all("url")
             for tag in tags:
                 url = tag.findNext("loc").text
@@ -48,6 +49,7 @@ class Cymax(scrapy.Spider):
             start_urls = start_urls[-100:]
     start_urls = list(np.unique(start_urls))
     def parse(self, response):
+        time.sleep(0.5)
         if response.url == 'https://www.cymax.com/':
             return
         datetime = int(str(int(time.time()*100)))
